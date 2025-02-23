@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://dq7qljelx3qne"]
+
+[ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_opyn2"]
+[ext_resource type="PackedScene" uid="uid://cicf046gcc2gc" path="res://Scenes/player_paddle.tscn" id="2_ux2hl"]
+[ext_resource type="PackedScene" uid="uid://v3la5t51008p" path="res://Scenes/ball.tscn" id="3_mmwqo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pc81"]
+bg_color = Color(0.117647, 0.215686, 0.215686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh32l"]
+bg_color = Color(0.0588235, 0.117647, 0.117647, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2td2"]
+bg_color = Color(0.117647, 0.215686, 0.215686, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ky18e"]
+size = Vector2(20, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jus31"]
+size = Vector2(360, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jody0"]
+size = Vector2(360, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbx84"]
+size = Vector2(20, 400)
+
+[node name="GameManager" type="Node2D"]
+position = Vector2(160, 0)
+script = ExtResource("1_opyn2")
+
+[node name="LeftPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(160, 360)
+offset_left = -160.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3pc81")
+metadata/_edit_use_anchors_ = true
+
+[node name="MidPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(320, 360)
+offset_right = 320.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wh32l")
+metadata/_edit_use_anchors_ = true
+
+[node name="RightPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(160, 360)
+offset_left = 320.0
+offset_right = 480.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e2td2")
+metadata/_edit_use_anchors_ = true
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(330, 180)
+shape = SubResource("RectangleShape2D_ky18e")
+
+[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, -10)
+shape = SubResource("RectangleShape2D_jus31")
+
+[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, 370)
+shape = SubResource("RectangleShape2D_jody0")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-10, 180)
+shape = SubResource("RectangleShape2D_tbx84")
+
+[node name="PlayerPaddle" parent="." instance=ExtResource("2_ux2hl")]
+position = Vector2(159, 313)
+
+[node name="Ball" parent="." instance=ExtResource("3_mmwqo")]
+position = Vector2(184, 169)
