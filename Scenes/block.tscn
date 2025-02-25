@@ -1,17 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://coeev6wrmaw5n"]
+[gd_scene load_steps=5 format=3 uid="uid://coeev6wrmaw5n"]
 
 [ext_resource type="Script" path="res://Scripts/block.gd" id="1_bu72t"]
-[ext_resource type="Texture2D" uid="uid://dbi06d64woqcc" path="res://icon.svg" id="2_1g22j"]
+[ext_resource type="Texture2D" uid="uid://ccnt86k7ssien" path="res://Assets/small_blocks.png" id="2_pqxvc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hsp53"]
 size = Vector2(16, 16)
 
-[node name="Block" type="StaticBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifh0e"]
+size = Vector2(16, 16)
+
+[node name="Block" type="StaticBody2D" groups=["blocks"]]
 script = ExtResource("1_bu72t")
+metadata/_edit_group_ = true
 
 [node name="BlockSprite" type="Sprite2D" parent="."]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("2_1g22j")
+texture = ExtResource("2_pqxvc")
+hframes = 3
 
 [node name="BlockCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hsp53")
+
+[node name="HeightCollider" type="Area2D" parent="." groups=["block_areas"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeightCollider"]
+shape = SubResource("RectangleShape2D_ifh0e")
+debug_color = Color(0.935453, 0.167515, 0.483988, 0.42)

@@ -4,3 +4,7 @@
 
 [node name="Global" type="Node"]
 script = ExtResource("1_ohcpx")
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
