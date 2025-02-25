@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		BallState.BOUNCING:
 			# Speeds the ball up if it hasn't been hit by the paddle in a long time
 			time_since_hit += 1
-			if time_since_hit % 400 == 0:
+			if time_since_hit % 200 == 0 and not time_since_hit == 200:
 				velocity *= 1.3
 			
 			# Checks for collision and returns the KinematicCollision2D

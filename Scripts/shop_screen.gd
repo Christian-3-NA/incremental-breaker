@@ -8,7 +8,8 @@ extends Control
 	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade,
 	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/MoreBallUpgrade,
 	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade,
-	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/HigherMoney2Upgrade
+	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/HigherMoney2Upgrade,
+	$HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/LongerGameTime
 ]
 
 
@@ -69,8 +70,8 @@ func _on_higher_money_2_upgrade_pressed() -> void:
 		Global.upgrades_bought.append(button_ref.upgrade_name)
 		Global.coin_chance = 0.66
 
-func _on_upgrade_button_pressed() -> void:
-	var button_ref = $HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/UpgradeButton
+func _on_longer_game_time_pressed() -> void:
+	var button_ref = $HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/LongerGameTime
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
 		Global.max_game_time = 900

@@ -84,7 +84,7 @@ disabled = true
 upgrade_cost = 5
 upgrade_name = "BiggerPaddle"
 
-[node name="UpgradeButton" parent="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" instance=ExtResource("2_h18hm")]
+[node name="LongerGameTime" parent="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" instance=ExtResource("2_h18hm")]
 layout_mode = 0
 offset_left = -30.0
 offset_top = -113.0
@@ -166,5 +166,5 @@ text = "more time 3"
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade" to="." method="_on_faster_ball_upgrade_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/MoreBallUpgrade" to="." method="_on_more_ball_upgrade_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" to="." method="_on_bigger_paddle_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/UpgradeButton" to="." method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/LongerGameTime" to="." method="_on_longer_game_time_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/Panel/HigherMoneyUpgrade/HigherMoney2Upgrade" to="." method="_on_higher_money_2_upgrade_pressed"]
