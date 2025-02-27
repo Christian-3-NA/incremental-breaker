@@ -28,6 +28,8 @@ var minimum_brick_height = 16 * 7 - 8
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	insert_pattern()
+	
 	$BlockLowerTimer.start()
 	setup_level()
 	
@@ -90,6 +92,11 @@ func lower_bricks():
 func spawn_next_row():
 	for c in columns:
 		spawn_blocks(c, 0)
+
+
+func insert_pattern():
+	for space in Global.pattern_dict[0]:
+		occupied_spots.append([space[0], space[1]-10])
 
 
 func spawn_blocks(c, r):
