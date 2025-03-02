@@ -54,12 +54,3 @@ layout_mode = 2
 
 [connection signal="pressed" from="HBoxContainer/LeftContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade" to="." method="_on_higher_money_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade" to="." method="_on_faster_ball_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/MoreBallUpgrade" to="." method="_on_more_ball_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" to="." method="_on_bigger_paddle_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/LongerGameTime" to="." method="_on_longer_game_time_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/HigherMoney2Upgrade" to="." method="_on_higher_money_2_upgrade_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/BuyLaserUpgrade" to="." method="_on_buy_laser_upgrade_pressed"]
-
-[editable path="HBoxContainer/VBoxContainer2/ShopTree"]
