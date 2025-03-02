@@ -7,31 +7,31 @@ extends Node2D
 var paddle_scene = preload("res://Scenes/player_paddle.tscn")
 var big_brick_sprite = preload("res://Assets/big_blocks.png")
 var brick_scene = preload("res://Scenes/block.tscn")
-var game_timer = Global.get_node("GameTimer")
 var all_bricks = []
-var rng = RandomNumberGenerator.new()
-var paddle_ref
 var ball_ref = []
+var paddle_ref
+
+var game_timer = Global.get_node("GameTimer")
 var game_time = Global.max_game_time
+var rng = RandomNumberGenerator.new()
+
+var pattern_list_size = Global.image_pattern_ref_list.size() - 1 # Randi_range is inclusive for some reason
 
 # Spawning Parameters
-var columns = 20
-var rows = 1
 var margin = 8
-var occupied_spots = []
+var default_block_lower_timer = 1
+var spawn_wave_at_height = 0
 
 # Gameplay Variables
-var minimum_brick_height = 16 * 7 - 8
+var current_height = 0
 
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	insert_pattern()
-	
 	$BlockLowerTimer.start()
-	setup_level()
+	insert_pattern(rng.randi_range(0, pattern_list_size))
 	
 	# Configure game timer
 	game_timer.wait_time = Global.max_game_time
@@ -49,21 +49,22 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if $BlockLowerTimer.is_stopped():
 		if height_check():
-			lower_bricks()
+			lower_bricks($BlockLowerTimer.wait_time)
+			$BlockLowerTimer.wait_time = max(0.01, $BlockLowerTimer.wait_time * 0.7)
+		else:
+			$BlockLowerTimer.wait_time = default_block_lower_timer
+		if pattern_check():
+			insert_pattern(rng.randi_range(0, pattern_list_size))
 			
 	$LeftPanel/TimeDisplay.text = "%d:%02d" % [
 		floor(game_timer.time_left / 60),
 		int(game_timer.time_left) % 60,
 	]
 	
-	
+	$RightPanel/HeightDisplay.text = str(current_height)
+
+
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
-
-func setup_level():
-	for r in rows:
-		for c in columns:
-			spawn_blocks(c, r)
-
 
 func end_level():
 	get_tree().change_scene_to_file("res://Scenes/shop_screen.tscn")
@@ -79,46 +80,60 @@ func height_check():
 			should_lower = false
 
 	return should_lower
+
+
+func lower_bricks(time):
+	current_height += 1
 	
-	
-func lower_bricks():
 	for brick in all_bricks:
-		brick.position.y += 16
-	for brick in occupied_spots:
-		brick[1] += 1
-	spawn_next_row()
+		if time > 0.05:
+			var tween = create_tween()
+			tween.set_ease(0)
+			tween.set_trans(2)
+			tween.tween_property(brick, "position", Vector2(brick.position + Vector2(0, 16)), time/1.3)
+		else:
+			brick.position += Vector2(0, 16)
 
 
-func spawn_next_row():
-	for c in columns:
-		spawn_blocks(c, 0)
+func insert_pattern(pattern_id):
+	var pattern_height = Global.image_pattern_ref_list[pattern_id].get_image().get_height()
+	spawn_wave_at_height += pattern_height
+	
+	for space in Global.pattern_dict[pattern_id]:
+		match space[0]:
+			0:
+				pass
+			1:
+				spawn_block(space[1][0], space[1][1] - pattern_height, 1)
+			2:
+				spawn_block(space[1][0], space[1][1] - pattern_height, 2)
 
 
-func insert_pattern():
-	for space in Global.pattern_dict[0]:
-		occupied_spots.append([space[0], space[1]-10])
+func pattern_check():
+	var should_spawn_pattern = true
+	
+	if current_height < spawn_wave_at_height:
+		should_spawn_pattern = false
+
+	return should_spawn_pattern
 
 
-func spawn_blocks(c, r):
-	if [c, r] not in occupied_spots:
-		var new_brick = brick_scene.instantiate()
-		all_bricks.append(new_brick)
-		occupied_spots.append([c, r])
-		new_brick.brick_destroyed.connect(on_brick_broken)
+func spawn_block(c, r, size):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
+
+	var space_for_big = false
+	if size == 2:
+		new_brick.health = 2
+		new_brick.scale *= 2
+		new_brick.get_node("BlockSprite").texture = big_brick_sprite
+		new_brick.get_node("BlockSprite").scale *= 0.5
+		new_brick.get_node("CracksSprite").scale *= 0.5
 		
-		# Make some blocks larger
-		var space_for_big = false
-		if ([c+1, r] not in occupied_spots) and ([c, r-1] not in occupied_spots) and ([c+1, r-1] not in occupied_spots) and (c < 19):
-			space_for_big = true
-		if rng.randi() % 2 == 0 and space_for_big:
-			new_brick.scale *= 2
-			new_brick.get_node("BlockSprite").texture = big_brick_sprite
-			new_brick.get_node("BlockSprite").scale *= 0.5
-			occupied_spots.append_array([[c+1, r], [c, r-1], [c+1, r-1]])
-			
-		new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
-		new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
-		add_child(new_brick)
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
 
 
 ''' ---------- SIGNAL FUNCTIONS ---------- '''

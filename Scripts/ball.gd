@@ -9,6 +9,7 @@ signal ball_destroyed
 # Player Stats
 var speed = Global.ball_speed
 var time_since_hit = 0
+var going_fast = false
 
 # State Manager
 @onready var state = BallState.IDLE
@@ -40,6 +41,13 @@ func _physics_process(delta: float) -> void:
 			time_since_hit += 1
 			if time_since_hit % 200 == 0 and not time_since_hit == 200:
 				velocity *= 1.3
+				going_fast = true
+			
+			# Particles
+			if going_fast:
+				$GPUParticles2D.emitting = true
+			else:
+				$GPUParticles2D.emitting = false
 			
 			# Checks for collision and returns the KinematicCollision2D
 			var collision_info = move_and_collide(velocity * delta)
@@ -52,11 +60,16 @@ func _physics_process(delta: float) -> void:
 						# Biased toward redirecting the ball upward so it doesn't bounce left and right forever
 						velocity = ( (position - collision_target.position) * Vector2(1, 2) ).normalized()
 						velocity = velocity * speed
+						if position.y >= collision_target.position.y:
+							velocity.y *= -1
 						time_since_hit = 0
+						going_fast = false
+						
+						# Charge Equipment
+						collision_target.charge()
 						
 					"KillFloor":
-						ball_destroyed.emit(self)
-						queue_free()
+						shatter()
 						
 					_:
 						if collision_info.get_normal().dot(velocity.normalized()) <= 0.0:
@@ -64,3 +77,10 @@ func _physics_process(delta: float) -> void:
 						
 						if collision_target.has_method("hit"):
 							collision_target.hit()
+
+
+''' ---------- DEFAULT FUNCTIONS ---------- '''
+
+func shatter():
+	ball_destroyed.emit(self)
+	queue_free()

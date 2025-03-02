@@ -7,18 +7,32 @@ class_name UpgradeButton
 var is_selected = false
 @export var upgrade_cost = 0
 @export var upgrade_name = ""
+var last_position = global_position
 
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	queue_redraw()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta: float) -> void:
+	
 	if get_parent() is UpgradeButton:
-		$Line2D.add_point(global_position + size/2 + Vector2(320, 0))
-		$Line2D.add_point(get_parent().global_position + size/2 + Vector2(320, 0))
+		$Line2D.clear_points()
+		$Line2D.add_point(global_position + size/2)
+		$Line2D.add_point(get_parent().global_position + size/2)
+
+'''
+func _draw():
+	if get_parent() is UpgradeButton:
+		var point1 = -(position) + size/2
+		draw_line(point1, Vector2(0, 0) + size/2, Color(0, 0, 0, 255), 2)'''
 
 
-''' ---------- DEFAULT FUNCTIONS ---------- '''
+''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func start_pressed():
 	is_selected = true
@@ -30,7 +44,7 @@ func start_pressed():
 	$Line2D.default_color = Color(1, 1, 1)
 
 
-''' ---------- SIGNAL FUCNTIONS ---------- '''
+''' ---------- SIGNAL FUNCTIONS ---------- '''
 
 func _on_pressed() -> void:
 	if is_selected == false and Global.coins >= upgrade_cost:
@@ -43,17 +57,3 @@ func _on_pressed() -> void:
 		
 		$Panel.hide()
 		$Line2D.default_color = Color(1, 1, 1)
-
-
-
-'''func _on_toggled(toggled_on: bool) -> void:
-	for child in get_children():
-		if child is UpgradeButton and toggled_on:
-			child.disabled = false
-	
-	if toggled_on:
-		$Panel.hide()
-		$Line2D.default_color = Color(1, 1, 1)
-	else:
-		$Panel.show()
-		$Line2D.default_color = Color(0.1, 0.1, 0.1)'''

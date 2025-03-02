@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://Scripts/upgrade_button.gd" id="2_5ankc"]
 
 [node name="UpgradeButton" type="TextureButton"]
+z_index = -1
+z_as_relative = false
 custom_minimum_size = Vector2(30, 30)
 offset_right = 30.0
 offset_bottom = 30.0
@@ -22,7 +24,8 @@ mouse_filter = 2
 
 [node name="Line2D" type="Line2D" parent="."]
 top_level = true
-z_index = -1
+z_index = -2
+z_as_relative = false
 width = 3.0
 default_color = Color(0.114897, 0.114897, 0.114897, 1)
 

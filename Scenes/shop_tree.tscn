@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2n7anhx0i288"]
+
+[ext_resource type="PackedScene" uid="uid://dlnfcvb81dju4" path="res://Scenes/upgrade_button.tscn" id="1_pwjfw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aj6l1"]
+bg_color = Color(0.254902, 0.254902, 0.254902, 1)
+
+[node name="ShopTree" type="Panel"]
+clip_children = 2
+z_index = -4
+z_as_relative = false
+custom_minimum_size = Vector2(1200, 600)
+offset_left = -149.0
+offset_top = -117.0
+offset_right = 1051.0
+offset_bottom = 483.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_aj6l1")
+
+[node name="HigherMoneyUpgrade" parent="." instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 269.0
+offset_top = 381.0
+offset_right = 299.0
+offset_bottom = 411.0
+upgrade_cost = 2
+upgrade_name = "HigherMoney"
+
+[node name="FasterBallUpgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -73.0
+offset_right = 25.0
+offset_bottom = -43.0
+disabled = true
+upgrade_cost = 4
+upgrade_name = "FasterBall"
+
+[node name="MoreBallUpgrade" parent="HigherMoneyUpgrade/FasterBallUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 73.0
+offset_top = -55.0
+offset_right = 103.0
+offset_bottom = -25.0
+disabled = true
+upgrade_cost = 8
+upgrade_name = "MoreBall"
+
+[node name="BiggerPaddleUpgrade" parent="HigherMoneyUpgrade/FasterBallUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -59.0
+offset_right = 31.0
+offset_bottom = -29.0
+disabled = true
+upgrade_cost = 5
+upgrade_name = "BiggerPaddle"
+
+[node name="LongerGameTime" parent="HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -58.0
+offset_right = 27.0
+offset_bottom = -28.0
+disabled = true
+upgrade_cost = 3
+upgrade_name = "LongerGameTime"
+
+[node name="HigherMoney2Upgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 67.0
+offset_top = -9.0
+offset_right = 97.0
+offset_bottom = 21.0
+disabled = true
+upgrade_cost = 15
+upgrade_name = "HigherMoney2"
+
+[node name="BuyLaserUpgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -47.0
+offset_right = -34.0
+offset_bottom = -17.0
+disabled = true
+upgrade_cost = 1
+upgrade_name = "BuyLaser"
+
+[connection signal="pressed" from="HigherMoneyUpgrade" to="." method="_on_higher_money_upgrade_pressed"]
