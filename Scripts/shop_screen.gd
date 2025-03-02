@@ -18,14 +18,14 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(recursive_children($HBoxContainer/VBoxContainer2/ShopTree, []).slice(1))
+	#print(recursive_children($HBoxContainer/VBoxContainer2/ShopTree, []).slice(1))
 	
 	$HBoxContainer/LeftContainer/VBoxContainer/MoneyLabel.text = str(Global.coins)
 	for button in all_upgrade_buttons:
 		if button.upgrade_name in Global.upgrades_bought:
 			button.start_pressed()
 	
-	print(all_upgrade_buttons)
+	#print(all_upgrade_buttons)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -62,41 +62,41 @@ func _on_higher_money_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.coin_chance = 0.5
+		#Global.coin_chance = 0.5
 		
 
 func _on_faster_ball_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.ball_speed = 300
+		#Global.ball_speed = 300
 
 func _on_more_ball_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/MoreBallUpgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.ball_count = 2
+		#Global.ball_count = 2
 		
 func _on_bigger_paddle_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.paddle_size = 150
+		#Global.paddle_size = 100
 
 func _on_higher_money_2_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/HigherMoney2Upgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.coin_chance = 0.66
+		#Global.coin_chance = 0.66
 
 func _on_longer_game_time_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade/LongerGameTime
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.max_game_time = 900
+		#Global.max_game_time = 900
 
 func _on_buy_laser_upgrade_pressed() -> void:
 	var button_ref = $HBoxContainer/VBoxContainer2/ShopTree/HigherMoneyUpgrade/BuyLaserUpgrade
 	if (button_ref.is_selected == true) and (button_ref.upgrade_name not in Global.upgrades_bought):
 		Global.upgrades_bought.append(button_ref.upgrade_name)
-		Global.laser_unlocked = true
+		#Global.laser_unlocked = 1

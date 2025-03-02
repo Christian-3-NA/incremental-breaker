@@ -7,7 +7,10 @@ class_name UpgradeButton
 var is_selected = false
 @export var upgrade_cost = 0
 @export var upgrade_name = ""
-var last_position = global_position
+@export var value_to_change = ""
+@export var new_value = 0.0
+@export var unlocked_by: Array[PackedScene] = []
+@export var unlocks: Array[PackedScene] = []
 
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
@@ -19,17 +22,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	
 	if get_parent() is UpgradeButton:
 		$Line2D.clear_points()
 		$Line2D.add_point(global_position + size/2)
 		$Line2D.add_point(get_parent().global_position + size/2)
-
-'''
-func _draw():
-	if get_parent() is UpgradeButton:
-		var point1 = -(position) + size/2
-		draw_line(point1, Vector2(0, 0) + size/2, Color(0, 0, 0, 255), 2)'''
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
@@ -54,6 +50,8 @@ func _on_pressed() -> void:
 		for child in get_children():
 			if child is UpgradeButton:
 				child.disabled = false
+		
+		Global.set(value_to_change, new_value)
 		
 		$Panel.hide()
 		$Line2D.default_color = Color(1, 1, 1)

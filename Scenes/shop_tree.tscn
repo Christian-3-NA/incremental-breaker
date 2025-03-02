@@ -26,6 +26,8 @@ offset_right = 299.0
 offset_bottom = 411.0
 upgrade_cost = 2
 upgrade_name = "HigherMoney"
+value_to_change = "coin_chance"
+new_value = 0.5
 
 [node name="FasterBallUpgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -36,6 +38,8 @@ offset_bottom = -43.0
 disabled = true
 upgrade_cost = 4
 upgrade_name = "FasterBall"
+value_to_change = "ball_speed"
+new_value = 300.0
 
 [node name="MoreBallUpgrade" parent="HigherMoneyUpgrade/FasterBallUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -46,6 +50,8 @@ offset_bottom = -25.0
 disabled = true
 upgrade_cost = 8
 upgrade_name = "MoreBall"
+value_to_change = "ball_count"
+new_value = 2.0
 
 [node name="BiggerPaddleUpgrade" parent="HigherMoneyUpgrade/FasterBallUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -56,6 +62,8 @@ offset_bottom = -29.0
 disabled = true
 upgrade_cost = 5
 upgrade_name = "BiggerPaddle"
+value_to_change = "paddle_size"
+new_value = 100.0
 
 [node name="LongerGameTime" parent="HigherMoneyUpgrade/FasterBallUpgrade/BiggerPaddleUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -66,6 +74,8 @@ offset_bottom = -28.0
 disabled = true
 upgrade_cost = 3
 upgrade_name = "LongerGameTime"
+value_to_change = "max_game_time"
+new_value = 900.0
 
 [node name="HigherMoney2Upgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -76,6 +86,8 @@ offset_bottom = 21.0
 disabled = true
 upgrade_cost = 15
 upgrade_name = "HigherMoney2"
+value_to_change = "coin_chance"
+new_value = 0.66
 
 [node name="BuyLaserUpgrade" parent="HigherMoneyUpgrade" instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -86,5 +98,7 @@ offset_bottom = -17.0
 disabled = true
 upgrade_cost = 1
 upgrade_name = "BuyLaser"
+value_to_change = "laser_unlocked"
+new_value = 1.0
 
 [connection signal="pressed" from="HigherMoneyUpgrade" to="." method="_on_higher_money_upgrade_pressed"]

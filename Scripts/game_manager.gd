@@ -47,6 +47,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	print(Global.coin_chance)
 	if $BlockLowerTimer.is_stopped():
 		if height_check():
 			lower_bricks($BlockLowerTimer.wait_time)
@@ -55,12 +56,14 @@ func _physics_process(delta: float) -> void:
 			$BlockLowerTimer.wait_time = default_block_lower_timer
 		if pattern_check():
 			insert_pattern(rng.randi_range(0, pattern_list_size))
-			
+	
+	# Time Display
 	$LeftPanel/TimeDisplay.text = "%d:%02d" % [
 		floor(game_timer.time_left / 60),
 		int(game_timer.time_left) % 60,
 	]
 	
+	# Height Display
 	$RightPanel/HeightDisplay.text = str(current_height)
 
 

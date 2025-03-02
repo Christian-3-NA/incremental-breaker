@@ -2,15 +2,15 @@ extends Node
 
 var coins = 100
 
-# Upgrades
+# Upgrades. All values must be flaot
 var coin_chance = 0.25 # %chance of out 1.0
 var paddle_size = 60 # by pixels
 var ball_speed = 200 
 var ball_count = 1 # how many balls
 var max_game_time = 60
 
-# Equipment Upgrades
-var laser_unlocked = false
+# Equipment Upgrades. bools are 0 or 1
+var laser_unlocked = 0
 
 var upgrades_bought = []
 
