@@ -50,7 +50,7 @@ func fire_laser(parent):
 			new_line.add_point(result.position - game_manager_ref.position)
 			
 			new_line.texture = laser_beam_sprite
-			new_line.texture_repeat = true
+			new_line.texture_repeat = 2
 			new_line.texture_mode = 1
 			new_line.width = 6
 			

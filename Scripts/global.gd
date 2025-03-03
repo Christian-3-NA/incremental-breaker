@@ -2,7 +2,7 @@ extends Node
 
 var coins = 100
 
-# Upgrades. All values must be flaot
+# Upgrades. All values must be float
 var coin_chance = 0.25 # %chance of out 1.0
 var paddle_size = 60 # by pixels
 var ball_speed = 200 

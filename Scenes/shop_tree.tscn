@@ -18,7 +18,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_aj6l1")
 
-[node name="BuyLaserUpgrade" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
+[node name="BuyLaserUpgrade" parent="." node_paths=PackedStringArray("unlocked_by", "unlocks") instance=ExtResource("1_pwjfw")]
 layout_mode = 0
 offset_left = 205.0
 offset_top = 334.0
@@ -30,6 +30,7 @@ upgrade_name = "BuyLaser"
 value_to_change = "laser_unlocked"
 new_value = 1.0
 unlocked_by = [NodePath("../HigherMoneyUpgrade")]
+unlocks = [NodePath("../SlowerBallUpgrade")]
 
 [node name="HigherMoney2Upgrade" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -69,7 +70,7 @@ upgrade_name = "BiggerPaddle"
 value_to_change = "paddle_size"
 new_value = 100.0
 unlocked_by = [NodePath("../FasterBallUpgrade")]
-unlocks = [NodePath("../LongerGameTime")]
+unlocks = [NodePath("../LongerGameTime"), NodePath("../SlowerBallUpgrade")]
 
 [node name="LongerGameTime" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -109,3 +110,16 @@ upgrade_name = "HigherMoney"
 value_to_change = "coin_chance"
 new_value = 0.5
 unlocks = [NodePath("../FasterBallUpgrade"), NodePath("../HigherMoney2Upgrade"), NodePath("../BuyLaserUpgrade")]
+
+[node name="SlowerBallUpgrade" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 272.0
+offset_right = 213.0
+offset_bottom = 302.0
+disabled = true
+upgrade_cost = 25
+upgrade_name = "SlowerBall"
+value_to_change = "ball_speed"
+new_value = 50.0
+unlocked_by = [NodePath("../BuyLaserUpgrade"), NodePath("../BiggerPaddleUpgrade")]
