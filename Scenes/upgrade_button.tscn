@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dlnfcvb81dju4"]
 
 [ext_resource type="Texture2D" uid="uid://dbi06d64woqcc" path="res://icon.svg" id="1_l1hhj"]
-[ext_resource type="Script" path="res://Scripts/upgrade_button.gd" id="2_5ankc"]
+[ext_resource type="Script" uid="uid://dd2mty40mex77" path="res://Scripts/upgrade_button.gd" id="2_5ankc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_05sve"]
 

@@ -4,10 +4,10 @@ var coins = 100
 
 # Upgrades. All values must be float
 var coin_chance = 0.25 # %chance of out 1.0
-var paddle_size = 60 # by pixels
-var ball_speed = 200 
-var ball_count = 1 # how many balls
-var max_game_time = 60
+var paddle_size = 60.0 # by pixels
+var ball_speed = 200.0
+var ball_count = 1.0 # how many balls
+var max_game_time = 60.0
 
 # Equipment Upgrades. bools are 0 or 1
 var laser_unlocked = 0

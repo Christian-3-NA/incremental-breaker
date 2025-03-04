@@ -10,7 +10,9 @@ var is_selected = false
 # Upgrade unique variables
 @export var upgrade_cost = 0
 @export var upgrade_name = ""
+@export var upgrade_description = ""
 @export var value_to_change = ""
+@export var value_change_mode = ""
 @export var new_value = 0.0
 @export var unlocked_by: Array[UpgradeButton] = []
 @export var unlocks: Array[UpgradeButton] = []
@@ -26,17 +28,24 @@ var tooltip_scene = load("res://Scenes/upgrade_popup.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Disable the button if it has any parents in the tree
+	if unlocked_by:
+		disabled = true
+		
 	if upgrade_name in Global.upgrades_bought:
 		start_pressed()
 	
 	# Create the lines connecting to parents
 	for parent in unlocked_by:
+		if parent.upgrade_name in Global.upgrades_bought:
+			disabled = false
+		
 		var new_line = Line2D.new()
 		new_line.width = 6
 		new_line.texture_repeat = 2
 		new_line.texture_mode = 1
 		
-		if is_selected == true:
+		if is_selected == true and parent.upgrade_name in Global.upgrades_bought:
 			new_line.texture = tree_lines_bright
 		else:
 			new_line.texture = tree_lines_dark
@@ -48,20 +57,22 @@ func _ready() -> void:
 		
 		add_child(new_line)
 		tree_lines.append(new_line)
+		
 
 
 func _make_custom_tooltip(for_text: String) -> Object:
 	var new_tooltip = tooltip_scene.instantiate()
 	
-	new_tooltip.get_node("Label").text = "Name: " + upgrade_name \
-		+ "\nCost: " + str(upgrade_cost )
-		
+	new_tooltip.get_node("VBoxContainer/Label").text = upgrade_name + " - Cost " + str(upgrade_cost)
+	new_tooltip.get_node("VBoxContainer/Label2").text = upgrade_description
+	
 	return new_tooltip
 	
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func start_pressed():
+	disabled = false
 	is_selected = true
 	for child in unlocks:
 		child.disabled = false
@@ -79,10 +90,26 @@ func _on_pressed() -> void:
 		for child in unlocks:
 			child.disabled = false
 		
-		Global.set(value_to_change, new_value)
+		# Change value depending on value_change_mode
+		match value_change_mode:
+			"set":
+				Global.set(value_to_change, new_value)
+				
+			"add_float":
+				var old_value = Global.get(value_to_change)
+				var modified_value = old_value + new_value
+				Global.set(value_to_change, modified_value)
+				
+			"subtract_float":
+				var old_value = Global.get(value_to_change)
+				var modified_value = old_value - new_value
+				Global.set(value_to_change, modified_value)
+		
 		Global.upgrades_bought.append(upgrade_name)
 		
 		$Panel.hide()
+		
+		# Set lines between buttons
 		for line_index in tree_lines.size():
 			if unlocked_by[line_index].is_selected == true:
 				tree_lines[line_index].texture = tree_lines_bright

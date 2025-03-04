@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca64ysflda241"]
 
 [ext_resource type="Texture2D" uid="uid://cfotnu7ks4q6s" path="res://Assets/laser.png" id="1_2bdey"]
-[ext_resource type="Script" path="res://Scripts/laser.gd" id="1_ju6lh"]
+[ext_resource type="Script" uid="uid://t6igfw7jr67m" path="res://Scripts/laser.gd" id="1_ju6lh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2oio3"]
 size = Vector2(16, 16)
