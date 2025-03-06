@@ -1,10 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://byf6toar5qc8h"]
+[gd_scene load_steps=6 format=3 uid="uid://byf6toar5qc8h"]
 
 [ext_resource type="Script" uid="uid://qt6wfqthh4x3" path="res://Scripts/global.gd" id="1_ohcpx"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koean"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_o8ivi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SceneTransitionScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_koean"]
+resource_name = "scene_transition"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SceneTransitionScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yl8w0"]
+_data = {
+&"RESET": SubResource("Animation_o8ivi"),
+&"scene_transition": SubResource("Animation_koean")
+}
+
 [node name="Global" type="Node"]
+process_mode = 3
 script = ExtResource("1_ohcpx")
 
 [node name="GameTimer" type="Timer" parent="."]
 wait_time = 30.0
 one_shot = true
+
+[node name="SceneTransitionScreen" type="Panel" parent="."]
+visible = false
+z_index = 64
+z_as_relative = false
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_koean")
+
+[node name="SceneTransitionPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yl8w0")
+}
+playback_auto_capture_transition_type = 4

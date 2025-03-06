@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 							collision_target.hit()
 
 
-''' ---------- DEFAULT FUNCTIONS ---------- '''
+''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func shatter():
 	ball_destroyed.emit(self)

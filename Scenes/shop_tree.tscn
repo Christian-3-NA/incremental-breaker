@@ -89,7 +89,7 @@ upgrade_name = "Higher Money"
 value_to_change = "coin_chance"
 value_change_mode = "set"
 new_value = 0.5
-unlocks = [NodePath("../FasterBallUpgrade"), NodePath("../HigherMoney2Upgrade"), NodePath("../BuyLaserUpgrade")]
+unlocks = [NodePath("../FasterBallUpgrade"), NodePath("../HigherMoney2Upgrade"), NodePath("../BuyLaserUpgrade"), NodePath("../MoreSafetyNets")]
 
 [node name="LongerGameTime" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
 layout_mode = 0
@@ -132,3 +132,17 @@ value_to_change = "ball_speed"
 value_change_mode = "subtract_float"
 new_value = 150.0
 unlocked_by = [NodePath("../BuyLaserUpgrade"), NodePath("../BiggerPaddleUpgrade")]
+
+[node name="MoreSafetyNets" parent="." node_paths=PackedStringArray("unlocked_by") instance=ExtResource("1_pwjfw")]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 392.0
+offset_right = 537.0
+offset_bottom = 422.0
+upgrade_cost = 5
+upgrade_name = "Safety Net"
+upgrade_description = "Keeps your ball from falling once."
+value_to_change = "starting_nets"
+value_change_mode = "add_float"
+new_value = 1.0
+unlocked_by = [NodePath("../HigherMoneyUpgrade")]

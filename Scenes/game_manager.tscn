@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dq7qljelx3qne"]
+[gd_scene load_steps=11 format=3 uid="uid://dq7qljelx3qne"]
 
 [ext_resource type="Script" uid="uid://bbocmn23ten61" path="res://Scripts/game_manager.gd" id="1_opyn2"]
+[ext_resource type="PackedScene" uid="uid://bru8kicfx4ugg" path="res://Scenes/safety_net.tscn" id="2_e5fcp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pc81"]
 bg_color = Color(0.117647, 0.215686, 0.215686, 1)
@@ -102,3 +103,8 @@ shape = SubResource("RectangleShape2D_d1dvt")
 
 [node name="BlockLowerTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SafetyNet" parent="." instance=ExtResource("2_e5fcp")]
+process_mode = 4
+visible = false
+position = Vector2(160, 330)

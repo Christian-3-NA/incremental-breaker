@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk0ymnra8wigw"]
+
+[ext_resource type="Script" uid="uid://clcl5q8apahs" path="res://Scripts/powerup.gd" id="1_85oov"]
+[ext_resource type="Texture2D" uid="uid://bmf1pdju8mgxh" path="res://Assets/power_up_icons/extra_ball_power.png" id="2_dkaad"]
+
+[node name="Powerup" type="Node2D"]
+script = ExtResource("1_85oov")
+
+[node name="PowerupSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_dkaad")
