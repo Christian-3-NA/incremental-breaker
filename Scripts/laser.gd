@@ -42,7 +42,7 @@ func fire_laser(parent):
 			if result.collider.has_method("hit"):
 				result.collider.hit("laser")
 			if result.collider.has_method("shatter"):
-				result.collider.shatter()
+				result.collider.shatter("laser")
 		
 			# Draws the laser
 			var new_line = Line2D.new()

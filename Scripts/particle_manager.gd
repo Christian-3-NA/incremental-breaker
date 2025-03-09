@@ -5,6 +5,7 @@ extends Node2D
 var block_broken_particle = preload("res://Particles/block_broken_particle.tscn")
 var coin_grabbed_particle = preload("res://Particles/coin_grabbed_particle.tscn")
 var block_disentigrate_particle = preload("res://Particles/block_disentigrate_particle.tscn")
+var ball_shatter_particle = preload("res://Particles/ball_shatter_particle.tscn")
 
 var blue_texture = preload("res://Assets/particles/block_broken_particle_blue.png")
 var red_texture  = preload("res://Assets/particles/block_broken_particle_red.png")
@@ -37,5 +38,11 @@ func spawn_block_disentigrate_particle(spawn_position, new_scale):
 
 func spawn_coin_grabbed_particle(spawn_position):
 	var new_particle = coin_grabbed_particle.instantiate()
+	new_particle.position = spawn_position
+	add_child(new_particle)
+
+
+func spawn_ball_shatter_particle(spawn_position):
+	var new_particle = ball_shatter_particle.instantiate()
 	new_particle.position = spawn_position
 	add_child(new_particle)

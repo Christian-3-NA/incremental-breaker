@@ -211,7 +211,12 @@ func on_brick_broken(brick, source):
 	all_bricks.erase(brick)
 
 
-func on_ball_destroyed(ball):
+func on_ball_destroyed(ball, source):
+	match source:
+		"bottom":
+			pass
+		"laser":
+			$ParticleManager.spawn_ball_shatter_particle(ball.position)
 	ball_ref.erase(ball)
 	if paddle_ref.held_ball_count == 0 and ball_ref.is_empty():
 		end_level()

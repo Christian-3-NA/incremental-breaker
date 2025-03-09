@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 						collision_target.charge()
 						
 					"KillFloor":
-						shatter()
+						shatter("bottom")
 						
 					_:
 						if collision_info.get_normal().dot(velocity.normalized()) <= 0.0:
@@ -81,6 +81,6 @@ func _physics_process(delta: float) -> void:
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
-func shatter():
-	ball_destroyed.emit(self)
+func shatter(source):
+	ball_destroyed.emit(self, source)
 	queue_free()
