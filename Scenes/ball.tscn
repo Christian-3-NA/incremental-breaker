@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://v3la5t51008p"]
+[gd_scene load_steps=9 format=3 uid="uid://v3la5t51008p"]
 
 [ext_resource type="Script" uid="uid://jk8j7oca0vvm" path="res://Scripts/ball.gd" id="1_05lg2"]
 [ext_resource type="Texture2D" uid="uid://bwgq0wr4iwvua" path="res://Assets/ball.png" id="2_j05ko"]
@@ -13,12 +13,19 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_eq8nq"]
 curve = SubResource("Curve_qy2rq")
 
+[sub_resource type="Gradient" id="Gradient_ij5cq"]
+colors = PackedColorArray(0.775063, 0.775063, 0.775063, 1, 0.288518, 0.288518, 0.288518, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_376qj"]
+gradient = SubResource("Gradient_ij5cq")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4ce2a"]
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_376qj")
 alpha_curve = SubResource("CurveTexture_eq8nq")
 
-[node name="Ball" type="CharacterBody2D"]
+[node name="Ball" type="CharacterBody2D" groups=["balls"]]
 script = ExtResource("1_05lg2")
 metadata/_edit_group_ = true
 
@@ -30,5 +37,5 @@ shape = SubResource("CircleShape2D_q0gp4")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_4ce2a")
 texture = ExtResource("2_j05ko")
+process_material = SubResource("ParticleProcessMaterial_4ce2a")

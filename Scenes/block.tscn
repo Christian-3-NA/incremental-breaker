@@ -30,3 +30,5 @@ debug_color = Color(0.935453, 0.167515, 0.483988, 0.42)
 [node name="CracksSprite" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("3_ihyi0")
+
+[connection signal="body_exited" from="HeightCollider" to="." method="_on_height_collider_body_exited"]

@@ -76,7 +76,7 @@ func _physics_process(delta: float) -> void:
 							velocity = velocity.bounce(collision_info.get_normal())
 						
 						if collision_target.has_method("hit"):
-							collision_target.hit()
+							collision_target.hit("ball")
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''

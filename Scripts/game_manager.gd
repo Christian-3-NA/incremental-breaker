@@ -6,6 +6,7 @@ extends Node2D
 # Scenes
 var paddle_scene = preload("res://Scenes/player_paddle.tscn")
 var big_brick_sprite = preload("res://Assets/big_blocks.png")
+var ghost_brick_sprite = preload("res://Assets/ghost_blocks.png")
 var brick_scene = preload("res://Scenes/block.tscn")
 var all_bricks = []
 var ball_ref = []
@@ -58,7 +59,6 @@ func _ready() -> void:
 	paddle_ref = new_paddle
 
 	# Enable the safety net
-	current_nets = Global.starting_nets
 	if current_nets > 0:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
@@ -69,6 +69,8 @@ func _physics_process(delta: float) -> void:
 	if $BlockLowerTimer.is_stopped():
 		if height_check():
 			lower_bricks($BlockLowerTimer.wait_time)
+			if current_height >= Global.goal_height:
+				win_level()
 			$BlockLowerTimer.wait_time = max(0.01, $BlockLowerTimer.wait_time * 0.7)
 		else:
 			$BlockLowerTimer.wait_time = default_block_lower_timer
@@ -82,10 +84,9 @@ func _physics_process(delta: float) -> void:
 	]
 	
 	# Height Display
-	$RightPanel/HeightDisplay.text = str(current_height)
+	$RightPanel/HeightDisplay.text = str(current_height) + "m / " + str(Global.goal_height) + "m"
 	
 	# Spawn nets with powerups
-	current_nets = Global.safety_nets
 	if current_nets > 0:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
@@ -98,6 +99,10 @@ func end_level():
 	await Global.get_node("SceneTransitionPlayer").animation_finished
 	get_tree().change_scene_to_file("res://Scenes/shop_screen.tscn")
 
+
+func win_level():
+	Global.stars += 1
+	end_level()
 
 # Checks if there are any bricks on the lowest layer, if not then returns true
 func height_check():
@@ -133,9 +138,11 @@ func insert_pattern(pattern_id):
 			0:
 				pass
 			1:
-				spawn_block(space[1][0], space[1][1] - pattern_height, 1)
+				spawn_block(space[1][0], space[1][1] - pattern_height)
 			2:
-				spawn_block(space[1][0], space[1][1] - pattern_height, 2)
+				spawn_big_block(space[1][0], space[1][1] - pattern_height)
+			3:
+				spawn_ghost_block(space[1][0], space[1][1] - pattern_height)
 
 
 func pattern_check():
@@ -147,18 +154,12 @@ func pattern_check():
 	return should_spawn_pattern
 
 
-func spawn_block(c, r, size):
+''' ---------- BLOCK FUNCTIONS ---------- '''
+
+func spawn_block(c, r):
 	var new_brick = brick_scene.instantiate()
 	all_bricks.append(new_brick)
 	new_brick.brick_destroyed.connect(on_brick_broken)
-
-	var space_for_big = false
-	if size == 2:
-		new_brick.health = 2
-		new_brick.scale *= 2
-		new_brick.get_node("BlockSprite").texture = big_brick_sprite
-		new_brick.get_node("BlockSprite").scale *= 0.5
-		new_brick.get_node("CracksSprite").scale *= 0.5
 		
 	var next_powerup_spawn = powerup_spawn_names[rng.rand_weighted(powerup_spawn_weights)]
 	if next_powerup_spawn != "none":
@@ -169,9 +170,44 @@ func spawn_block(c, r, size):
 	add_child(new_brick)
 
 
+func spawn_big_block(c, r):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
+
+	new_brick.health = 2
+	new_brick.scale *= 2
+	new_brick.get_node("BlockSprite").texture = big_brick_sprite
+	new_brick.get_node("BlockSprite").scale *= 0.5
+	new_brick.get_node("CracksSprite").scale *= 0.5
+		
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
+
+
+func spawn_ghost_block(c, r):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
+	
+	new_brick.get_node("BlockSprite").texture = ghost_brick_sprite
+	new_brick.get_node("BlockCollision").set_deferred("disabled", true)
+	
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
+
+
 ''' ---------- SIGNAL FUNCTIONS ---------- '''
 
-func on_brick_broken(brick):
+func on_brick_broken(brick, source):
+	match source:
+		"ball":
+			$ParticleManager.spawn_block_broken_particle(brick.position, brick.get_node("BlockSprite").frame, brick.scale)
+		"laser":
+			$ParticleManager.spawn_block_disentigrate_particle(brick.position, brick.scale)
+	
 	all_bricks.erase(brick)
 
 

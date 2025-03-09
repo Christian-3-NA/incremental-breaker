@@ -8,7 +8,7 @@ func disable_net():
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 
-func hit():
-	Global.safety_nets -= 1
-	if Global.safety_nets <= 0:
+func hit(source):
+	get_parent().current_nets -= 1
+	if get_parent().current_nets <= 0:
 		disable_net()

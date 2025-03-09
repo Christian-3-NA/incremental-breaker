@@ -40,7 +40,7 @@ func fire_laser(parent):
 		var result = space_state.intersect_ray(query)
 		if result:
 			if result.collider.has_method("hit"):
-				result.collider.hit()
+				result.collider.hit("laser")
 			if result.collider.has_method("shatter"):
 				result.collider.shatter()
 		

@@ -7,6 +7,7 @@ extends Node2D
 var ball_scene = preload("res://Scenes/ball.tscn")
 var ball_powerup_sprite = preload("res://Assets/power_up_icons/extra_ball_power.png")
 var safety_net_powerup_sprite = preload("res://Assets/power_up_icons/safety_net_power.png")
+@onready var game_manager_ref = get_parent().get_parent()
 
 # States
 var powerup_type = ""
@@ -21,7 +22,7 @@ func _ready() -> void:
 			$PowerupSprite.texture = ball_powerup_sprite
 
 		"SAFETY_NET":
-			$PowerupSprite.texture =safety_net_powerup_sprite
+			$PowerupSprite.texture = safety_net_powerup_sprite
 
 
 
@@ -40,4 +41,4 @@ func activate_powerup():
 			new_ball.ball_destroyed.connect(get_parent().get_parent().on_ball_destroyed)
 		
 		"SAFETY_NET":
-			Global.safety_nets += 1
+			get_parent().get_parent().current_nets += 1

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dq7qljelx3qne"]
+[gd_scene load_steps=12 format=3 uid="uid://dq7qljelx3qne"]
 
 [ext_resource type="Script" uid="uid://bbocmn23ten61" path="res://Scripts/game_manager.gd" id="1_opyn2"]
 [ext_resource type="PackedScene" uid="uid://bru8kicfx4ugg" path="res://Scenes/safety_net.tscn" id="2_e5fcp"]
+[ext_resource type="Script" uid="uid://oc2lsmms0euj" path="res://Scripts/particle_manager.gd" id="3_sq00h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pc81"]
 bg_color = Color(0.117647, 0.215686, 0.215686, 1)
@@ -13,13 +14,13 @@ bg_color = Color(0.0588235, 0.117647, 0.117647, 1)
 bg_color = Color(0.117647, 0.215686, 0.215686, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ky18e"]
-size = Vector2(20, 432)
+size = Vector2(20, 510)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jus31"]
 size = Vector2(360, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tbx84"]
-size = Vector2(20, 432)
+size = Vector2(20, 510)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jody0"]
 size = Vector2(360, 20)
@@ -76,15 +77,15 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="TopWall" type="CollisionShape2D" parent="Walls"]
-position = Vector2(330, 196)
+position = Vector2(330, 157)
 shape = SubResource("RectangleShape2D_ky18e")
 
 [node name="RightWall" type="CollisionShape2D" parent="Walls"]
-position = Vector2(160, -10)
+position = Vector2(160, -9)
 shape = SubResource("RectangleShape2D_jus31")
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls"]
-position = Vector2(-10, 196)
+position = Vector2(-10, 157)
 shape = SubResource("RectangleShape2D_tbx84")
 
 [node name="KillFloor" type="StaticBody2D" parent="."]
@@ -108,3 +109,6 @@ one_shot = true
 process_mode = 4
 visible = false
 position = Vector2(160, 330)
+
+[node name="ParticleManager" type="Node2D" parent="."]
+script = ExtResource("3_sq00h")
