@@ -36,7 +36,7 @@ var current_nets = Global.starting_nets
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Global.play_scene_transition(false)
+	Global.play_scene_transition(false, 1)
 	
 	# Powerup Spawning
 	for chance in powerup_spawn_weights:
@@ -62,6 +62,12 @@ func _ready() -> void:
 	if current_nets > 0:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
+	
+	# Configure Height Bar
+	$RightPanel/HeightBar.max_value = Global.goal_height
+	
+	#Configure Powerups	
+	$LeftPanel/SlowingFieldBar.max_value = Global.max_slowing_field_time
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -85,6 +91,10 @@ func _physics_process(delta: float) -> void:
 	
 	# Height Display
 	$RightPanel/HeightDisplay.text = str(current_height) + "m / " + str(Global.goal_height) + "m"
+	$RightPanel/HeightBar.value = current_height
+	
+	# Powerup Displays
+	$LeftPanel/SlowingFieldBar.value = $SlowingField/SlowingFieldTimer.time_left
 	
 	# Spawn nets with powerups
 	if current_nets > 0:
@@ -95,14 +105,15 @@ func _physics_process(delta: float) -> void:
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func end_level():
-	Global.play_scene_transition(true)
+	Global.play_scene_transition(true, 0.5)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
 	get_tree().change_scene_to_file("res://Scenes/shop_screen.tscn")
 
 
 func win_level():
 	Global.stars += 1
-	end_level()
+	print("you win!")
+	#end_level()
 
 # Checks if there are any bricks on the lowest layer, if not then returns true
 func height_check():
@@ -118,6 +129,9 @@ func height_check():
 
 func lower_bricks(time):
 	current_height += 1
+	scroll_parallax($LeftPanel/LeftParallax, time, 1)
+	scroll_parallax($MidPanel/ParallaxBg, time, 0.3)
+	scroll_parallax($RightPanel/RightParallax, time, 1)
 	
 	for brick in all_bricks:
 		if time > 0.05:
@@ -152,6 +166,22 @@ func pattern_check():
 		should_spawn_pattern = false
 
 	return should_spawn_pattern
+
+
+func modify_time(amount, multiplier):
+	var old_time = game_timer.time_left
+	old_time += amount * multiplier
+	game_timer.stop()
+	game_timer.wait_time = old_time
+	game_timer.start()
+
+
+func scroll_parallax(parallax_ref, time, distance_multiplier):
+	var parrallax_tween = get_tree().create_tween()
+	parrallax_tween.set_ease(0)
+	parrallax_tween.set_trans(2)
+	parrallax_tween.set_parallel(true)
+	parrallax_tween.tween_property(parallax_ref, "scroll_offset", parallax_ref.scroll_offset + Vector2(0, 16 * distance_multiplier), time/1.3)
 
 
 ''' ---------- BLOCK FUNCTIONS ---------- '''
@@ -220,3 +250,8 @@ func on_ball_destroyed(ball, source):
 	ball_ref.erase(ball)
 	if paddle_ref.held_ball_count == 0 and ball_ref.is_empty():
 		end_level()
+
+
+func _on_slowing_field_body_entered(body: Node2D) -> void:
+	if body in ball_ref:
+		body.going_slow = true

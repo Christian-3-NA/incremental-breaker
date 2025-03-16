@@ -1,8 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dq7qljelx3qne"]
+[gd_scene load_steps=17 format=3 uid="uid://dq7qljelx3qne"]
 
 [ext_resource type="Script" uid="uid://bbocmn23ten61" path="res://Scripts/game_manager.gd" id="1_opyn2"]
 [ext_resource type="PackedScene" uid="uid://bru8kicfx4ugg" path="res://Scenes/safety_net.tscn" id="2_e5fcp"]
+[ext_resource type="Texture2D" uid="uid://bgcsxccqclbty" path="res://Assets/bg_panels/tower_side_panel.png" id="2_fgdfb"]
+[ext_resource type="Texture2D" uid="uid://bbypfjnmw2mq0" path="res://Assets/bg_panels/tower_bg.png" id="2_mmt5l"]
 [ext_resource type="Script" uid="uid://oc2lsmms0euj" path="res://Scripts/particle_manager.gd" id="3_sq00h"]
+[ext_resource type="Script" uid="uid://dhb0ic4aiqthk" path="res://Scripts/slowing_field.gd" id="5_yqty0"]
+[ext_resource type="PackedScene" uid="uid://b230vlglbeo6q" path="res://Particles/slowing_field_particle.tscn" id="6_71d4j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pc81"]
 bg_color = Color(0.117647, 0.215686, 0.215686, 1)
@@ -28,6 +32,9 @@ size = Vector2(360, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1dvt"]
 size = Vector2(318, 32)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgdfb"]
+size = Vector2(318, 83)
+
 [node name="GameManager" type="Node2D"]
 position = Vector2(160, 0)
 script = ExtResource("1_opyn2")
@@ -39,14 +46,51 @@ offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3pc81")
 metadata/_edit_use_anchors_ = true
 
+[node name="LeftParallax" type="Parallax2D" parent="LeftPanel"]
+repeat_size = Vector2(0, 32)
+repeat_times = 2
+
+[node name="LSideBg" type="Sprite2D" parent="LeftPanel/LeftParallax"]
+position = Vector2(80, 180)
+texture = ExtResource("2_fgdfb")
+flip_h = true
+
 [node name="TimeDisplay" type="Label" parent="LeftPanel"]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 67.0
 offset_right = 115.0
 offset_bottom = 116.0
+text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CoinMagnetBar" type="ProgressBar" parent="LeftPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 328.0
+offset_right = 124.0
+offset_bottom = 345.0
+show_percentage = false
+
+[node name="SlowingFieldBar" type="ProgressBar" parent="LeftPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 289.0
+offset_right = 124.0
+offset_bottom = 306.0
+show_percentage = false
+
+[node name="PowerupLabels" type="Label" parent="LeftPanel"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 270.0
+offset_right = 70.0
+offset_bottom = 293.0
+theme_override_font_sizes/font_size = 12
+text = "Slowing
+
+Magnet"
 
 [node name="MidPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(320, 360)
@@ -54,6 +98,15 @@ offset_right = 320.0
 offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_wh32l")
 metadata/_edit_use_anchors_ = true
+
+[node name="ParallaxBg" type="Parallax2D" parent="MidPanel"]
+scroll_scale = Vector2(1, 0.5)
+repeat_size = Vector2(0, 36)
+repeat_times = 2
+
+[node name="PlayBg" type="Sprite2D" parent="MidPanel/ParallaxBg"]
+position = Vector2(160, 180)
+texture = ExtResource("2_mmt5l")
 
 [node name="RightPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(160, 360)
@@ -63,14 +116,32 @@ offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_e2td2")
 metadata/_edit_use_anchors_ = true
 
+[node name="RightParallax" type="Parallax2D" parent="RightPanel"]
+repeat_size = Vector2(0, 32)
+repeat_times = 2
+
+[node name="RSideBg" type="Sprite2D" parent="RightPanel/RightParallax"]
+position = Vector2(80, 180)
+texture = ExtResource("2_fgdfb")
+
 [node name="HeightDisplay" type="Label" parent="RightPanel"]
 layout_mode = 0
-offset_left = 35.0
-offset_top = 69.0
-offset_right = 139.0
-offset_bottom = 114.0
+offset_left = 67.0
+offset_top = 36.0
+offset_right = 171.0
+offset_bottom = 81.0
+text = "0/30"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HeightBar" type="ProgressBar" parent="RightPanel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 52.0
+offset_bottom = 352.0
+fill_mode = 3
+show_percentage = false
 
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
@@ -110,5 +181,24 @@ process_mode = 4
 visible = false
 position = Vector2(160, 330)
 
+[node name="SlowingField" type="Area2D" parent="."]
+process_mode = 4
+script = ExtResource("5_yqty0")
+
+[node name="SlowingFieldHitbox" type="CollisionShape2D" parent="SlowingField"]
+position = Vector2(160, 299.5)
+shape = SubResource("RectangleShape2D_fgdfb")
+
+[node name="SlowingFieldTimer" type="Timer" parent="SlowingField"]
+one_shot = true
+
+[node name="SlowingFieldParticle" parent="SlowingField" instance=ExtResource("6_71d4j")]
+process_mode = 1
+position = Vector2(160, 378)
+
 [node name="ParticleManager" type="Node2D" parent="."]
+process_mode = 4
 script = ExtResource("3_sq00h")
+
+[connection signal="area_entered" from="SlowingField" to="." method="_on_slowing_field_area_entered"]
+[connection signal="body_entered" from="SlowingField" to="." method="_on_slowing_field_body_entered"]
