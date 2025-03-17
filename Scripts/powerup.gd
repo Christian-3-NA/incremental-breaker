@@ -8,6 +8,7 @@ var ball_scene = preload("res://Scenes/ball.tscn")
 var ball_powerup_sprite = preload("res://Assets/power_up_icons/extra_ball_power.png")
 var safety_net_powerup_sprite = preload("res://Assets/power_up_icons/safety_net_power.png")
 var slowing_field_powerup_sprite = preload("res://Assets/power_up_icons/slowing_field_power.png")
+var coin_magnet_powerup_sprite = preload("res://Assets/power_up_icons/coin_magnet_power.png")
 @onready var game_manager_ref = get_parent().get_parent()
 
 # States
@@ -27,6 +28,9 @@ func _ready() -> void:
 
 		"SLOWING_FIELD":
 			$PowerupSprite.texture = slowing_field_powerup_sprite
+
+		"COIN_MAGNET":
+			$PowerupSprite.texture = coin_magnet_powerup_sprite
 
 
 
@@ -49,3 +53,7 @@ func activate_powerup():
 			
 		"SLOWING_FIELD":
 			game_manager_ref.get_node("SlowingField").enable_field()
+			
+		"COIN_MAGNET":
+			Global.player_paddle.magnet_active = true
+			game_manager_ref.get_node("CoinMagnetTimer").start()

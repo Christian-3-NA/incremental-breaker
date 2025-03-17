@@ -197,8 +197,10 @@ process_mode = 1
 position = Vector2(160, 378)
 
 [node name="ParticleManager" type="Node2D" parent="."]
-process_mode = 4
 script = ExtResource("3_sq00h")
+
+[node name="CoinMagnetTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="area_entered" from="SlowingField" to="." method="_on_slowing_field_area_entered"]
 [connection signal="body_entered" from="SlowingField" to="." method="_on_slowing_field_body_entered"]

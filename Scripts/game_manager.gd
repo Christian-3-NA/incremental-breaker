@@ -15,6 +15,7 @@ var paddle_ref
 var game_timer = Global.get_node("GameTimer")
 var game_time = Global.max_game_time
 var rng = RandomNumberGenerator.new()
+@onready var coin_magnet_timer = $CoinMagnetTimer
 
 var pattern_list_size = Global.image_pattern_ref_list.size() - 1 # Randi_range is inclusive for some reason
 
@@ -57,6 +58,7 @@ func _ready() -> void:
 	new_paddle.position = Vector2(160, 313)
 	add_child(new_paddle)
 	paddle_ref = new_paddle
+	Global.player_paddle = paddle_ref
 
 	# Enable the safety net
 	if current_nets > 0:
@@ -68,7 +70,10 @@ func _ready() -> void:
 	
 	#Configure Powerups	
 	$LeftPanel/SlowingFieldBar.max_value = Global.max_slowing_field_time
-
+	coin_magnet_timer.wait_time = Global.max_coin_magnet_time
+	coin_magnet_timer.timeout.connect(end_coin_magnet)
+	$LeftPanel/CoinMagnetBar.max_value = Global.max_coin_magnet_time
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -95,6 +100,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Powerup Displays
 	$LeftPanel/SlowingFieldBar.value = $SlowingField/SlowingFieldTimer.time_left
+	$LeftPanel/CoinMagnetBar.value = coin_magnet_timer.time_left
 	
 	# Spawn nets with powerups
 	if current_nets > 0:
@@ -182,6 +188,10 @@ func scroll_parallax(parallax_ref, time, distance_multiplier):
 	parrallax_tween.set_trans(2)
 	parrallax_tween.set_parallel(true)
 	parrallax_tween.tween_property(parallax_ref, "scroll_offset", parallax_ref.scroll_offset + Vector2(0, 16 * distance_multiplier), time/1.3)
+
+
+func end_coin_magnet():
+	Global.player_paddle.set("magnet_active", false)
 
 
 ''' ---------- BLOCK FUNCTIONS ---------- '''

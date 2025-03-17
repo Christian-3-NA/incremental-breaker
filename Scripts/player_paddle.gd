@@ -15,6 +15,7 @@ var speed = 300
 var paddle_size = Global.paddle_size
 var ball_count = Global.ball_count
 var held_ball_count = ball_count
+var magnet_active = false
 
 # Function Variables
 var accel_percent = 0
