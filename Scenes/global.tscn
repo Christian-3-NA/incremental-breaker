@@ -2,15 +2,12 @@
 
 [ext_resource type="Script" uid="uid://qt6wfqthh4x3" path="res://Scripts/global.gd" id="1_ohcpx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koean"]
-bg_color = Color(0, 0, 0, 1)
-
 [sub_resource type="Animation" id="Animation_o8ivi"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SceneTransitionScreen:modulate")
+tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -26,7 +23,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SceneTransitionScreen:modulate")
+tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,6 +39,9 @@ _data = {
 &"scene_transition": SubResource("Animation_koean")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koean"]
+bg_color = Color(0, 0, 0, 1)
+
 [node name="Global" type="Node"]
 process_mode = 3
 script = ExtResource("1_ohcpx")
@@ -50,7 +50,16 @@ script = ExtResource("1_ohcpx")
 wait_time = 30.0
 one_shot = true
 
-[node name="SceneTransitionScreen" type="Panel" parent="."]
+[node name="SceneTransitionPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yl8w0")
+}
+playback_auto_capture_transition_type = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="SceneTransitionScreen" type="Panel" parent="CanvasLayer"]
 visible = false
 z_index = 64
 z_as_relative = false
@@ -58,9 +67,3 @@ offset_right = 640.0
 offset_bottom = 360.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_koean")
-
-[node name="SceneTransitionPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_yl8w0")
-}
-playback_auto_capture_transition_type = 4

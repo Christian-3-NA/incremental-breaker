@@ -113,7 +113,7 @@ func _physics_process(delta: float) -> void:
 func end_level():
 	Global.play_scene_transition(true, 0.5)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
-	get_tree().change_scene_to_file("res://Scenes/shop_screen.tscn")
+	get_tree().change_scene_to_file("res://Scenes/shop_tree.tscn")
 
 
 func win_level():

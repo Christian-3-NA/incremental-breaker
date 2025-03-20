@@ -89,9 +89,9 @@ func initialize_pattern(image, index):
 func play_scene_transition(direction_bool, speed_scale):
 	$SceneTransitionPlayer.set_speed_scale(speed_scale)
 	if direction_bool:
-		$SceneTransitionScreen.show()
+		$CanvasLayer/SceneTransitionScreen.show()
 		$SceneTransitionPlayer.play("scene_transition")
 	else:
 		$SceneTransitionPlayer.play_backwards("scene_transition")
 		await $SceneTransitionPlayer.animation_finished
-		$SceneTransitionScreen.hide()
+		$CanvasLayer/SceneTransitionScreen.hide()

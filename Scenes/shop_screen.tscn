@@ -1,82 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://3ojicee5uvti"]
+[gd_scene load_steps=3 format=3 uid="uid://3ojicee5uvti"]
 
 [ext_resource type="Script" uid="uid://cqidgoebddk1w" path="res://Scripts/shop_screen.gd" id="1_hvcpq"]
-[ext_resource type="PackedScene" uid="uid://c2n7anhx0i288" path="res://Scenes/shop_tree.tscn" id="2_bkoha"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w3l4y"]
+bg_color = Color(0.0412309, 0.188071, 0.329459, 1)
 
 [node name="ShopScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.234
+anchor_bottom = 0.822
+offset_right = 0.23999
+offset_bottom = 0.0799866
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hvcpq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="LeftContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="LeftContainer" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_w3l4y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftContainer"]
-custom_minimum_size = Vector2(214, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="LeftContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
 
-[node name="StartButton" type="Button" parent="HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="LeftContainer/VBoxContainer"]
 layout_mode = 2
 text = "Start"
 
-[node name="MoneyLabel" type="Label" parent="HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="MoneyLabel" type="Label" parent="LeftContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ReturnButton" type="Button" parent="HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="ReturnButton" type="Button" parent="LeftContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Return"
 
-[node name="ScrollBox" type="ScrollContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(426, 360)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-follow_focus = true
+[node name="DropDownButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 296.0
+offset_right = 112.0
+offset_bottom = 323.0
+text = "v"
 
-[node name="ShopTree" parent="HBoxContainer/ScrollBox" instance=ExtResource("2_bkoha")]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-
-[node name="ZoomPanel" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(40, 84)
-layout_mode = 2
-offset_left = 587.0
-offset_top = 264.0
-offset_right = 627.0
-offset_bottom = 348.0
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
-[node name="ZoomInButton" type="Button" parent="ZoomPanel"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "+"
-
-[node name="ZoomOutButton" type="Button" parent="ZoomPanel"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "-"
-
-[connection signal="pressed" from="HBoxContainer/LeftContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/LeftContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
-[connection signal="pressed" from="ZoomPanel/ZoomInButton" to="." method="_on_zoom_in_button_pressed"]
-[connection signal="pressed" from="ZoomPanel/ZoomOutButton" to="." method="_on_zoom_out_button_pressed"]
+[connection signal="pressed" from="LeftContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="LeftContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="DropDownButton" to="." method="_on_drop_down_button_pressed"]

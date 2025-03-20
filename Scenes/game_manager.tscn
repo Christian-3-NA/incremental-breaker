@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dq7qljelx3qne"]
+[gd_scene load_steps=18 format=3 uid="uid://dq7qljelx3qne"]
 
 [ext_resource type="Script" uid="uid://bbocmn23ten61" path="res://Scripts/game_manager.gd" id="1_opyn2"]
 [ext_resource type="PackedScene" uid="uid://bru8kicfx4ugg" path="res://Scenes/safety_net.tscn" id="2_e5fcp"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://oc2lsmms0euj" path="res://Scripts/particle_manager.gd" id="3_sq00h"]
 [ext_resource type="Script" uid="uid://dhb0ic4aiqthk" path="res://Scripts/slowing_field.gd" id="5_yqty0"]
 [ext_resource type="PackedScene" uid="uid://b230vlglbeo6q" path="res://Particles/slowing_field_particle.tscn" id="6_71d4j"]
+[ext_resource type="Script" uid="uid://b2me7tpn6876q" path="res://Scripts/pause_menu.gd" id="8_efn8y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pc81"]
 bg_color = Color(0.117647, 0.215686, 0.215686, 1)
@@ -202,5 +203,38 @@ script = ExtResource("3_sq00h")
 [node name="CoinMagnetTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="PauseMenu" type="PanelContainer" parent="."]
+process_mode = 3
+visible = false
+top_level = true
+z_index = 64
+z_as_relative = false
+custom_minimum_size = Vector2(128, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_efn8y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
 [connection signal="area_entered" from="SlowingField" to="." method="_on_slowing_field_area_entered"]
 [connection signal="body_entered" from="SlowingField" to="." method="_on_slowing_field_body_entered"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]
