@@ -16,6 +16,7 @@ var rng = RandomNumberGenerator.new()
 var health = 1
 var child_powerup
 
+
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func hit(source):
@@ -23,7 +24,7 @@ func hit(source):
 	
 	if health <= 0:
 		brick_destroyed.emit(self, source)
-		if rng.randf() <= Global.coin_chance:
+		if rng.randf() <= (Global.coin_chance + (Global.altitude_money_multiplier * get_parent().current_height)):
 			var new_coin = coin_scene.instantiate()
 			new_coin.position = position
 			get_parent().add_child(new_coin)

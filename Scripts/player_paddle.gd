@@ -9,6 +9,9 @@ var held_ball
 var laser_scene = preload("res://Scenes/laser.tscn")
 var laser_unlocked = Global.laser_unlocked
 var laser_ref
+@onready var coin_magnet_timer = $"../CoinMagnetTimer"
+@onready var animator_ref = $CoinMagnetParticle.get_node("FadeIn")
+
 
 # Player Stats
 var speed = 300
@@ -104,6 +107,16 @@ func _physics_process(delta: float) -> void:
 			laser_ref.global_position = laser_ref.global_position.lerp(global_position + Vector2((paddle_size/2 - 16) * side_collision, -6), delta * 30)
 		else:
 			laser_ref.global_position = laser_ref.global_position.lerp(global_position + Vector2(0, -6), delta * 30)
+		
+	# Magnet Particles
+	if coin_magnet_timer.time_left:
+		if $CoinMagnetParticle.modulate == Color(1.0, 1.0, 1.0, 0.0):
+			animator_ref.play("FadeInOut")
+		elif animator_ref.get_playing_speed() < 0:
+			animator_ref.pause()
+			animator_ref.play("FadeInOut", -1, 1.0)
+	elif $CoinMagnetParticle.modulate != Color(1.0, 1.0, 1.0, 0.0):
+		$CoinMagnetParticle.get_node("FadeIn").play_backwards("FadeInOut")
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''

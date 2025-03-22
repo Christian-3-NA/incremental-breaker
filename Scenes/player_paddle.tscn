@@ -1,7 +1,66 @@
-[gd_scene load_steps=4 format=3 uid="uid://cicf046gcc2gc"]
+[gd_scene load_steps=13 format=3 uid="uid://cicf046gcc2gc"]
 
 [ext_resource type="Script" uid="uid://yp8d2byqw748" path="res://Scripts/player_paddle.gd" id="1_t8dmk"]
+[ext_resource type="Texture2D" uid="uid://dxod5q22wdux6" path="res://Assets/particles/explosion_ring.png" id="3_563gi"]
 [ext_resource type="Texture2D" uid="uid://bol6vjmh2jb38" path="res://Assets/paddle.png" id="3_ejy5y"]
+
+[sub_resource type="Curve" id="Curve_a1vud"]
+_data = [Vector2(0, 0), 0.0, 0.560492, 0, 0, Vector2(0.528205, 0.235955), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.678171, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2v4u8"]
+curve = SubResource("Curve_a1vud")
+
+[sub_resource type="Curve" id="Curve_563gi"]
+_data = [Vector2(0, 1), 0.0, -1.02247, 0, 0, Vector2(1, 0), -0.93118, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a1vud"]
+curve = SubResource("Curve_563gi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a1vud"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_a1vud")
+alpha_curve = SubResource("CurveTexture_2v4u8")
+
+[sub_resource type="Animation" id="Animation_563gi"]
+resource_name = "FadeInOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a1vud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2v4u8"]
+_data = {
+&"FadeInOut": SubResource("Animation_563gi"),
+&"RESET": SubResource("Animation_a1vud")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pqab"]
 size = Vector2(80, 8)
@@ -10,6 +69,19 @@ size = Vector2(80, 8)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_t8dmk")
+
+[node name="CoinMagnetParticle" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+amount = 3
+texture = ExtResource("3_563gi")
+lifetime = 2.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_a1vud")
+
+[node name="FadeIn" type="AnimationPlayer" parent="CoinMagnetParticle"]
+libraries = {
+&"": SubResource("AnimationLibrary_2v4u8")
+}
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 8

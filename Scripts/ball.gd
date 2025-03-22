@@ -12,6 +12,7 @@ var time_since_hit = 0
 var going_fast = false
 var going_slow = false
 var combo = 0
+var stored_explosions = 0
 
 # State Manager
 @onready var state = BallState.IDLE
@@ -23,6 +24,7 @@ enum BallState {
 
 # Scenes
 var popup_scene = preload("res://Scenes/number_popup.tscn")
+var explosion_scene = preload("res://Scenes/explosion.tscn")
 var last_collision
 
 
@@ -48,6 +50,8 @@ func _physics_process(delta: float) -> void:
 			if time_since_hit % 200 == 0 and not time_since_hit == 200:
 				velocity *= 1.3
 				going_fast = true
+				if Global.do_speed_explosion:
+					stored_explosions += 1
 			
 			# Going slow is currently only if slowing field is active
 			if velocity.y <= 0 and going_slow: 
@@ -83,12 +87,14 @@ func _physics_process(delta: float) -> void:
 						time_since_hit = 0
 						going_fast = false
 						going_slow = false
+						stored_explosions = 0
 						
 						# Charge Equipment
 						collision_target.charge()
 						
 						# Lose bounce combo
-						collision_target.get_parent().modify_time(floor(combo), 1)
+						if Global.do_combo_time:
+							collision_target.get_parent().modify_time(combo/5, 1)
 						combo = 0
 						
 					"KillFloor":
@@ -104,9 +110,14 @@ func _physics_process(delta: float) -> void:
 						
 						if collision_target.has_method("hit"):
 							collision_target.hit("ball")
-							combo += 0.2
-							if is_equal_approx(combo, roundf(combo)):
-								combo_popup(int(roundf(combo)))
+							
+						if collision_target.is_in_group("blocks"):
+							if stored_explosions > 0:
+								spawn_explosion(2) # Placeholder for explosion scaling
+								stored_explosions -= 1
+							combo += 1
+							if combo % 5 == 0:
+								combo_popup(combo)
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
@@ -125,3 +136,11 @@ func combo_popup(value):
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(new_popup, "position:y", new_popup.position.y - 24, 1)
+
+
+func spawn_explosion(size):
+	var new_explosion = explosion_scene.instantiate()
+	new_explosion.scale = Vector2(0, 0)
+	new_explosion.position = position
+	new_explosion.expand(size)
+	get_parent().add_child(new_explosion)

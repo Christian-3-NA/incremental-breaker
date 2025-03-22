@@ -24,8 +24,19 @@ var margin = 8
 var default_block_lower_timer = 1
 var spawn_wave_at_height = 0
 
-var powerup_spawn_names = Global.all_powerup_names
-var powerup_spawn_weights = Global.all_powerup_spawn_weights
+var powerup_spawn_names = [
+	Global.spawn_extra_ball_name, 
+	Global.spawn_safety_net_name, 
+	Global.spawm_slowing_field_name, 
+	Global.spawn_coin_magnet_name
+]
+var powerup_spawn_weights = [
+	Global.spawn_extra_ball_chance, 
+	Global.spawn_safety_net_chance, 
+	Global.spawm_slowing_field_chance, 
+	Global.spawn_coin_magnet_chance
+]
+
 var spawn_none_chance = 1.0
 
 # Gameplay Variables

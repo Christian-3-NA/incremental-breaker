@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo78r8mu7wqk7"]
+
+[ext_resource type="Script" uid="uid://bnaa1h6hdy7uu" path="res://Scripts/explosion.gd" id="1_a801j"]
+[ext_resource type="Texture2D" uid="uid://dxod5q22wdux6" path="res://Assets/particles/explosion_ring.png" id="1_aayv4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a801j"]
+radius = 18.0
+
+[sub_resource type="Animation" id="Animation_4okmj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a801j"]
+resource_name = "SelfFree"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(7.46427, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4okmj"]
+_data = {
+&"RESET": SubResource("Animation_4okmj"),
+&"SelfFree": SubResource("Animation_a801j")
+}
+
+[node name="Explosion" type="Area2D"]
+script = ExtResource("1_a801j")
+
+[node name="ExplosionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_a801j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_aayv4")
+
+[node name="SelfFree" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4okmj")
+}
+autoplay = "SelfFree"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -3,8 +3,6 @@ extends Control
 
 ''' ---------- VARIABLES ---------- '''
 
-# Positioning Variables
-var zoom_amount = Vector2(1.2, 1.2)
 var squished = false
 
 
@@ -39,14 +37,14 @@ func _on_drop_down_button_pressed() -> void:
 	if squished:
 		var tween = create_tween()
 		tween.set_ease(1)
-		tween.set_trans(3)
+		tween.set_trans(10)
 		tween.tween_property(self, "position:y", position.y + size.y, 0.4)
 		squished = false
 		
 	else:
 		var tween = create_tween()
 		tween.set_ease(0)
-		tween.set_trans(3)
+		tween.set_trans(10)
 		tween.tween_property(self, "position:y", position.y - size.y, 0.4)
 		squished = true
 	

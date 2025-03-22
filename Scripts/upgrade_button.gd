@@ -16,12 +16,16 @@ var is_selected = false
 @export var new_value = 0.0
 @export var unlocked_by: Array[UpgradeButton] = []
 @export var unlocks: Array[UpgradeButton] = []
+@export var upgrade_icon: Texture2D:
+	set(new_texture):
+		$UpgradeIcon.texture = new_texture
 var tree_lines: Array[Line2D] = []
 
 # Scenes
 var tree_lines_dark = load("res://Assets/tree_line_dark.png")
 var tree_lines_bright = load("res://Assets/tree_line_bright.png")
 var tooltip_scene = load("res://Scenes/upgrade_popup.tscn")
+var bought_texture = load("res://Assets/upgrade_icons/upgrade_bought.png")
 
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
@@ -34,6 +38,7 @@ func _ready() -> void:
 		
 	if upgrade_name in Global.upgrades_bought:
 		start_pressed()
+		
 	
 	# Create the lines connecting to parents
 	for parent in unlocked_by:
@@ -57,7 +62,6 @@ func _ready() -> void:
 		
 		add_child(new_line)
 		tree_lines.append(new_line)
-		
 
 
 func _make_custom_tooltip(for_text: String) -> Object:
@@ -73,6 +77,8 @@ func _make_custom_tooltip(for_text: String) -> Object:
 
 func start_pressed():
 	disabled = false
+	texture_normal = bought_texture
+	$UpgradeIcon.modulate = Color(1, 1, 1, 1)
 	is_selected = true
 	for child in unlocks:
 		child.disabled = false
@@ -87,6 +93,8 @@ func _on_pressed() -> void:
 		Global.coins -= upgrade_cost
 		
 		is_selected = true
+		texture_normal = bought_texture
+		$UpgradeIcon.modulate = Color(1, 1, 1, 1)
 		for child in unlocks:
 			child.disabled = false
 		
@@ -94,6 +102,9 @@ func _on_pressed() -> void:
 		match value_change_mode:
 			"set":
 				Global.set(value_to_change, new_value)
+				
+			"enable":
+				Global.set(value_to_change, true)
 				
 			"add_float":
 				var old_value = Global.get(value_to_change)
