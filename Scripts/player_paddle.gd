@@ -36,7 +36,7 @@ func _ready() -> void:
 	$BackupPaddleCollision.set_shape(new_hitbox) # Makes side-bumps lenient
 	$NinePatchRect.size.x = Global.paddle_size
 	$NinePatchRect.position = $NinePatchRect.size * -0.5
-		
+	
 	spawn_next_ball()
 	
 	# Spawns laser
@@ -63,7 +63,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		if Input.is_action_pressed("move_right"):
 			velocity.x = 1
-
+	
+	# Makes you fall when you run out of time lol
+	if Global.get_node("GameTimer").time_left == 0:
+		velocity.x = 0
+		velocity.y += 0.03
+		
 	# Movement acceleration code, minimal impact intended for precision movement only
 	if velocity == Vector2.ZERO:
 		accel_percent -= .1
@@ -135,6 +140,18 @@ func spawn_next_ball():
 func charge():
 	if laser_ref:
 		laser_ref.charge()
+
+
+func hurt():
+	speed = 50
+	self.modulate = Color(1.0, 0.6, 0.6, 1.0)
+	
+	var tween = create_tween()
+	tween.set_ease(0)
+	tween.set_trans(2)
+	tween.set_parallel()
+	tween.tween_property(self, "speed", 300, 3)
+	tween.tween_property(self, "modulate", Color.WHITE, 3)
 
 
 ''' ---------- SIGNAL FUCNTIONS ---------- '''

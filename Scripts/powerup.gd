@@ -49,6 +49,8 @@ func activate_powerup():
 			new_ball.ball_destroyed.connect(game_manager_ref.on_ball_destroyed)
 			
 		"SAFETY_NET":
+			if game_manager_ref.current_nets != 0:
+				game_manager_ref.get_node("SafetyNet").spawn_particles(2)
 			game_manager_ref.current_nets += 1
 			
 		"SLOWING_FIELD":

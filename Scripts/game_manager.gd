@@ -7,6 +7,7 @@ extends Node2D
 var paddle_scene = preload("res://Scenes/player_paddle.tscn")
 var big_brick_sprite = preload("res://Assets/big_blocks.png")
 var ghost_brick_sprite = preload("res://Assets/ghost_blocks.png")
+var crumbling_brick_sprite = preload("res://Assets/crumbling_block.png")
 var brick_scene = preload("res://Scenes/block.tscn")
 var all_bricks = []
 var ball_ref = []
@@ -62,7 +63,9 @@ func _ready() -> void:
 	# Configure game timer
 	game_timer.wait_time = Global.max_game_time
 	game_timer.start()
+	game_timer.paused = true
 	game_timer.timeout.connect(end_level)
+	$LeftPanel/ManaTimeBar.max_value = Global.max_game_time
 	
 	# Spawn Player
 	var new_paddle = paddle_scene.instantiate()
@@ -72,9 +75,11 @@ func _ready() -> void:
 	Global.player_paddle = paddle_ref
 
 	# Enable the safety net
-	if current_nets > 0:
+	if current_nets > 0 and $SafetyNet.visible == false:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
+	# Change net strength display
+	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, (current_nets-1)/10)
 	
 	# Configure Height Bar
 	$RightPanel/HeightBar.max_value = Global.goal_height
@@ -96,14 +101,17 @@ func _physics_process(delta: float) -> void:
 			$BlockLowerTimer.wait_time = max(0.01, $BlockLowerTimer.wait_time * 0.7)
 		else:
 			$BlockLowerTimer.wait_time = default_block_lower_timer
+			if game_timer.paused:
+				game_timer.paused = false
 		if pattern_check():
 			insert_pattern(rng.randi_range(0, pattern_list_size))
 	
 	# Time Display
-	$LeftPanel/TimeDisplay.text = "%d:%02d" % [
-		floor(game_timer.time_left / 60),
-		int(game_timer.time_left) % 60,
-	]
+#	$LeftPanel/TimeDisplay.text = "%d:%02d" % [
+#		floor(game_timer.time_left / 60),
+#		int(game_timer.time_left) % 60,
+#	]
+	$LeftPanel/ManaTimeBar.value = game_timer.time_left
 	
 	# Height Display
 	$RightPanel/HeightDisplay.text = str(current_height) + "m / " + str(Global.goal_height) + "m"
@@ -114,17 +122,20 @@ func _physics_process(delta: float) -> void:
 	$LeftPanel/CoinMagnetBar.value = coin_magnet_timer.time_left
 	
 	# Spawn nets with powerups
-	if current_nets > 0:
+	if current_nets > 0 and $SafetyNet.visible == false:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
+	# Change net strength display
+	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, (current_nets-1)/10)
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func end_level():
-	Global.play_scene_transition(true, 0.5)
+	Global.play_scene_transition(true, 0.3)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
-	get_tree().change_scene_to_file("res://Scenes/shop_tree.tscn")
+	if get_tree() != null:
+		get_tree().change_scene_to_file("res://Scenes/shop_tree.tscn")
 
 
 func win_level():
@@ -174,6 +185,8 @@ func insert_pattern(pattern_id):
 				spawn_big_block(space[1][0], space[1][1] - pattern_height)
 			3:
 				spawn_ghost_block(space[1][0], space[1][1] - pattern_height)
+			4:
+				spawn_crumbling_block(space[1][0], space[1][1] - pattern_height)
 
 
 func pattern_check():
@@ -250,6 +263,24 @@ func spawn_ghost_block(c, r):
 	add_child(new_brick)
 
 
+func spawn_crumbling_block(c, r):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
+	
+	new_brick.crumbling = true
+	new_brick.health = 5
+	new_brick.scale *= 2
+	new_brick.get_node("BlockSprite").texture = crumbling_brick_sprite
+	new_brick.get_node("BlockSprite").scale *= 0.5
+	new_brick.get_node("CracksSprite").scale *= 0.5
+	new_brick.get_node("BlockSprite").hframes = 1
+	
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
+	
+
+
 ''' ---------- SIGNAL FUNCTIONS ---------- '''
 
 func on_brick_broken(brick, source):
@@ -258,6 +289,12 @@ func on_brick_broken(brick, source):
 			$ParticleManager.spawn_block_broken_particle(brick.position, brick.get_node("BlockSprite").frame, brick.scale)
 		"laser":
 			$ParticleManager.spawn_block_disentigrate_particle(brick.position, brick.scale)
+		"crumbling":
+			$ParticleManager.spawn_block_disentigrate_particle(brick.position, brick.scale)
+		"falling_block":
+			$ParticleManager.spawn_block_broken_particle(brick.position, brick.get_node("BlockSprite").frame, brick.scale)
+		"falling_block_broken":
+			$ParticleManager.spawn_block_broken_particle(brick.position, 3, Vector2(2, 2))
 	
 	all_bricks.erase(brick)
 

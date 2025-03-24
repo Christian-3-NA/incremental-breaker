@@ -9,12 +9,14 @@ signal brick_destroyed
 # Scenes
 var coin_scene = preload("res://Scenes/coin.tscn")
 var powerup_scene = preload("res://Scenes/powerup.tscn")
+var falling_block_scene = preload("res://Scenes/falling_block.tscn")
 var brick_sprite = preload("res://Assets/small_blocks.png")
 var rng = RandomNumberGenerator.new()
 
 # Variables
 var health = 1
 var child_powerup
+var crumbling = false
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
@@ -35,6 +37,16 @@ func hit(source):
 	
 	else:
 		$CracksSprite.show()
+		
+		if crumbling:
+			brick_destroyed.emit(self, "crumbling")
+			
+			var new_falling_block = falling_block_scene.instantiate()
+			new_falling_block.position = position
+			get_parent().add_child(new_falling_block)
+			new_falling_block.brick_destroyed.connect(get_parent().on_brick_broken)
+			
+			queue_free()
 
 
 func spawn_with_powerup(powerup_type):

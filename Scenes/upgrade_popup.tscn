@@ -1,9 +1,13 @@
-[gd_scene format=3 uid="uid://chgrtbcvyxyyl"]
+[gd_scene load_steps=2 format=3 uid="uid://chgrtbcvyxyyl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0da36"]
+bg_color = Color(0.139032, 0.152779, 0.171389, 1)
 
 [node name="UpgradePopup" type="PanelContainer"]
 custom_minimum_size = Vector2(120, 80)
 offset_right = 61.0
 offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0da36")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

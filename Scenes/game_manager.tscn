@@ -1,10 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://dq7qljelx3qne"]
+[gd_scene load_steps=21 format=3 uid="uid://dq7qljelx3qne"]
 
 [ext_resource type="Script" uid="uid://bbocmn23ten61" path="res://Scripts/game_manager.gd" id="1_opyn2"]
 [ext_resource type="PackedScene" uid="uid://bru8kicfx4ugg" path="res://Scenes/safety_net.tscn" id="2_e5fcp"]
 [ext_resource type="Texture2D" uid="uid://bgcsxccqclbty" path="res://Assets/bg_panels/tower_side_panel.png" id="2_fgdfb"]
 [ext_resource type="Texture2D" uid="uid://bbypfjnmw2mq0" path="res://Assets/bg_panels/tower_bg.png" id="2_mmt5l"]
+[ext_resource type="Texture2D" uid="uid://jr3xl4hyrhsi" path="res://Assets/bg_panels/mana_time_display.png" id="3_i4mau"]
 [ext_resource type="Script" uid="uid://oc2lsmms0euj" path="res://Scripts/particle_manager.gd" id="3_sq00h"]
+[ext_resource type="Texture2D" uid="uid://daa7kawqvdk4f" path="res://Assets/bg_panels/mana_time_display_full.png" id="4_jencv"]
+[ext_resource type="Texture2D" uid="uid://c4r7lbn52qpeg" path="res://Assets/bg_panels/tower_height_display.png" id="5_b5cn8"]
 [ext_resource type="Script" uid="uid://dhb0ic4aiqthk" path="res://Scripts/slowing_field.gd" id="5_yqty0"]
 [ext_resource type="PackedScene" uid="uid://b230vlglbeo6q" path="res://Particles/slowing_field_particle.tscn" id="6_71d4j"]
 [ext_resource type="Script" uid="uid://b2me7tpn6876q" path="res://Scripts/pause_menu.gd" id="8_efn8y"]
@@ -57,6 +60,7 @@ texture = ExtResource("2_fgdfb")
 flip_h = true
 
 [node name="TimeDisplay" type="Label" parent="LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 18.0
 offset_top = 67.0
@@ -67,6 +71,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CoinMagnetBar" type="ProgressBar" parent="LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 7.0
 offset_top = 328.0
@@ -75,6 +80,7 @@ offset_bottom = 345.0
 show_percentage = false
 
 [node name="SlowingFieldBar" type="ProgressBar" parent="LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 7.0
 offset_top = 289.0
@@ -83,6 +89,7 @@ offset_bottom = 306.0
 show_percentage = false
 
 [node name="PowerupLabels" type="Label" parent="LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 11.0
 offset_top = 270.0
@@ -92,6 +99,22 @@ theme_override_font_sizes/font_size = 12
 text = "Slowing
 
 Magnet"
+
+[node name="ManaVatSprite" type="Sprite2D" parent="LeftPanel"]
+position = Vector2(61, 180)
+texture = ExtResource("3_i4mau")
+
+[node name="ManaTimeBar" type="TextureProgressBar" parent="LeftPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.352778
+anchor_right = 0.6375
+anchor_bottom = 0.647222
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("4_jencv")
+metadata/_edit_use_anchors_ = true
 
 [node name="MidPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(320, 360)
@@ -125,7 +148,12 @@ repeat_times = 2
 position = Vector2(80, 180)
 texture = ExtResource("2_fgdfb")
 
+[node name="TowerSprite" type="Sprite2D" parent="RightPanel"]
+position = Vector2(98, 200)
+texture = ExtResource("5_b5cn8")
+
 [node name="HeightDisplay" type="Label" parent="RightPanel"]
+visible = false
 layout_mode = 0
 offset_left = 67.0
 offset_top = 36.0
@@ -137,10 +165,10 @@ vertical_alignment = 1
 
 [node name="HeightBar" type="ProgressBar" parent="RightPanel"]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 8.0
-offset_right = 52.0
-offset_bottom = 352.0
+offset_left = 88.0
+offset_top = 51.0
+offset_right = 100.0
+offset_bottom = 348.0
 fill_mode = 3
 show_percentage = false
 

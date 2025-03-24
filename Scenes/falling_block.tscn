@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm051pkgv28hh"]
+
+[ext_resource type="Script" uid="uid://dwsrkxxnrk5qk" path="res://Scripts/falling_block.gd" id="1_374re"]
+[ext_resource type="Texture2D" uid="uid://csxmyymx5rp1x" path="res://Assets/crumbling_block.png" id="2_vo5tb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k7ffj"]
+size = Vector2(30, 30)
+
+[node name="FallingBlock" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_374re")
+
+[node name="FallingBlockSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_vo5tb")
+
+[node name="FallingBlockCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k7ffj")

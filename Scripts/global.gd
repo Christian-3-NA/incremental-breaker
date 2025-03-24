@@ -1,7 +1,7 @@
 extends Node
 
 
-var coins = 100
+var coins = 1000
 var stars = 0
 
 # Upgrades. All values must be float
@@ -9,7 +9,7 @@ var coin_chance = 0.2 # %chance of out 1.0
 var paddle_size = 60.0 # by pixels
 var ball_speed = 200.0
 var ball_count = 1.0 # how many balls
-var max_game_time = 600.0
+var max_game_time = 45.0
 var starting_nets = 0.0
 var max_slowing_field_time = 15.0
 var max_coin_magnet_time = 15.0
@@ -42,18 +42,20 @@ var image_pattern_ref_list = [
 	load("res://Assets/block_patterns/pattern3.png"),
 	load("res://Assets/block_patterns/pattern4.png"),
 	load("res://Assets/block_patterns/pattern5.png"),
-	load("res://Assets/block_patterns/pattern6.png")
+	load("res://Assets/block_patterns/pattern6.png"),
+	load("res://Assets/block_patterns/pattern7.png")
 ]
 
 # Gameplay Variables
 var player_paddle
-var goal_height = 30
+var goal_height = 50
 
 # Color Constants
 var C_WHITE = Color(1, 1, 1, 1)
 var C_BLACK = Color(0, 0, 0, 1)
 var C_GREY = Color8(127, 127, 127, 255)
 var C_CYAN = Color8(0, 127, 127, 255)
+var C_MAROON = Color8(127, 0, 0, 255)
 
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
@@ -81,6 +83,8 @@ func initialize_pattern(image, index):
 					pattern_data.append([2, [x, y]]) # LARGE BLOCK
 				C_CYAN:
 					pattern_data.append([3, [x, y]]) # GHOST BLOCK
+				C_MAROON:
+					pattern_data.append([4, [x, y]]) # CRUMBLING BLOCK
 				
 	pattern_dict[index] = pattern_data
 

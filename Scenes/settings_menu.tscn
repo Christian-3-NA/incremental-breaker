@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnrmv4s43r2qu"]
+
+[ext_resource type="Texture2D" uid="uid://bvcbmge4ch4y4" path="res://webcam-toy-photo1.jpg" id="1_icv2g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ef0u"]
+bg_color = Color(0.156863, 0.156863, 0.192157, 1)
+
+[node name="SettingsMenu" type="PanelContainer"]
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ef0u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(322, 189)
+scale = Vector2(0.3825, 0.328889)
+texture = ExtResource("1_icv2g")

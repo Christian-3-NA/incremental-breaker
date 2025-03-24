@@ -10,6 +10,7 @@ var ball_shatter_particle = preload("res://Particles/ball_shatter_particle.tscn"
 var blue_texture = preload("res://Assets/particles/block_broken_particle_blue.png")
 var red_texture  = preload("res://Assets/particles/block_broken_particle_red.png")
 var green_texture = preload("res://Assets/particles/block_broken_particle_green.png")
+var grey_texture = preload("res://Assets/particles/block_broken_particle.png")
 
 
 func spawn_block_broken_particle(spawn_position, frame, new_scale):
@@ -24,6 +25,8 @@ func spawn_block_broken_particle(spawn_position, frame, new_scale):
 			new_particle.texture = red_texture
 		2:
 			new_particle.texture = green_texture
+		3:
+			new_particle.texture = grey_texture
 	add_child(new_particle)
 
 

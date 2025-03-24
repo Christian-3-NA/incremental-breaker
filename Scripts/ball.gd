@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 						
 						# Lose bounce combo
 						if Global.do_combo_time:
-							collision_target.get_parent().modify_time(combo/5, 1)
+							collision_target.get_parent().modify_time(combo/3, 1)
 						combo = 0
 						
 					"KillFloor":
