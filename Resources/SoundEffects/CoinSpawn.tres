@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://ctdkbkdxpto0d"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_x0ml4"]
+[ext_resource type="AudioStream" uid="uid://cugqkdi7khay7" path="res://Assets/sounds/coin_spawn.wav" id="2_lvjq1"]
+
+[resource]
+script = ExtResource("1_x0ml4")
+limit = 5
+type = 5
+sound_effect = ExtResource("2_lvjq1")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

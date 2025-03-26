@@ -90,6 +90,7 @@ func start_pressed():
 
 func _on_pressed() -> void:
 	if is_selected == false and Global.coins >= upgrade_cost:
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_POSITIVE)
 		Global.coins -= upgrade_cost
 		
 		is_selected = true
@@ -129,3 +130,9 @@ func _on_pressed() -> void:
 			for line_index in children.tree_lines.size():
 				if children.unlocked_by[line_index].is_selected == true and children.is_selected == true:
 					children.tree_lines[line_index].texture = tree_lines_bright
+	
+	elif is_selected == false and Global.coins < upgrade_cost:
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEGATIVE)
+	
+	else:
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)

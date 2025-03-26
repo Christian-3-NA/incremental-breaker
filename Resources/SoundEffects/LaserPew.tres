@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://k7qfdimb5moc"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_7u6kn"]
+[ext_resource type="AudioStream" uid="uid://cnn5oq61mlkvp" path="res://Assets/sounds/laser_pew.wav" id="2_jbhb6"]
+
+[resource]
+script = ExtResource("1_7u6kn")
+limit = 5
+type = 6
+sound_effect = ExtResource("2_jbhb6")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

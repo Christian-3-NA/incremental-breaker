@@ -30,6 +30,7 @@ func hit(source):
 			var new_coin = coin_scene.instantiate()
 			new_coin.position = position
 			get_parent().add_child(new_coin)
+			AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.COIN_SPAWN)
 		
 		if child_powerup:
 			child_powerup.activate_powerup()

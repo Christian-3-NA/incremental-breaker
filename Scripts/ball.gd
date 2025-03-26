@@ -97,6 +97,8 @@ func _physics_process(delta: float) -> void:
 							collision_target.get_parent().modify_time(combo/3, 1)
 						combo = 0
 						
+						AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BLOCK_BOUNCE)
+						
 					"KillFloor":
 						shatter("bottom")
 						
@@ -118,6 +120,8 @@ func _physics_process(delta: float) -> void:
 							combo += 1
 							if combo % 5 == 0:
 								combo_popup(combo)
+						
+						AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BLOCK_BOUNCE)
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''

@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 	
 func pause():
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
 	if get_tree().paused == true:
 		get_tree().paused = false
 		hide()
@@ -28,7 +29,12 @@ func pause():
 
 func _on_resume_button_pressed() -> void:
 	pause()
-	
+
+
+func _on_return_button_pressed() -> void:
+	pause()
+	get_parent().end_level()
+
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()

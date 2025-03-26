@@ -11,12 +11,14 @@ func _ready() -> void:
 ''' ---------- SIGNAL FUNCTIONS ---------- '''
 
 func _on_start_button_pressed() -> void:
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
 	Global.play_scene_transition(true, 1)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
 	get_tree().change_scene_to_file("res://Scenes/shop_tree.tscn")
 
 
 func _on_settings_button_pressed() -> void:
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
 	get_tree().change_scene_to_file("res://Scenes/settings_menu.tscn")
 
 

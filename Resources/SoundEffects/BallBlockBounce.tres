@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://tal2owx1hmkl"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_qyckd"]
+[ext_resource type="AudioStream" uid="uid://8gh75btdjo8w" path="res://Assets/sounds/block_hit.wav" id="2_vmbdj"]
+
+[resource]
+script = ExtResource("1_qyckd")
+limit = 5
+type = 0
+sound_effect = ExtResource("2_vmbdj")
+volume = 1.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

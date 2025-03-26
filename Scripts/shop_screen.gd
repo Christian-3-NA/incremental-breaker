@@ -22,18 +22,22 @@ func _process(delta: float) -> void:
 ''' ---------- SIGNAL FUNCTIONS ---------- '''
 
 func _on_start_button_pressed() -> void:
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
 	Global.play_scene_transition(true, 1)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
 	get_tree().change_scene_to_file("res://Scenes/game_manager.tscn")
 
 
 func _on_return_button_pressed() -> void:
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
 	Global.play_scene_transition(true, 1)
 	await Global.get_node("SceneTransitionPlayer").animation_finished
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
 
 func _on_drop_down_button_pressed() -> void:
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_NEUTRAL)
+	
 	if squished:
 		var tween = create_tween()
 		tween.set_ease(1)

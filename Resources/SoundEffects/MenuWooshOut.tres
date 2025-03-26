@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://cpptjl8jqg6p6"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_ogoxl"]
+[ext_resource type="AudioStream" uid="uid://dyvshyhccneis" path="res://Assets/sounds/menu_woosh_out.wav" id="2_eno8p"]
+
+[resource]
+script = ExtResource("1_ogoxl")
+limit = 5
+type = 8
+sound_effect = ExtResource("2_eno8p")
+volume = -15.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

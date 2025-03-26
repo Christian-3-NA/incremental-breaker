@@ -1,7 +1,7 @@
 extends Node
 
 
-var coins = 1000
+var coins = 10
 var stars = 0
 
 # Upgrades. All values must be float
@@ -57,6 +57,8 @@ var C_GREY = Color8(127, 127, 127, 255)
 var C_CYAN = Color8(0, 127, 127, 255)
 var C_MAROON = Color8(127, 0, 0, 255)
 
+var rng = RandomNumberGenerator.new()
+
 
 ''' ---------- DEFAULT FUNCTIONS ---------- '''
 
@@ -93,9 +95,15 @@ func initialize_pattern(image, index):
 func play_scene_transition(direction_bool, speed_scale):
 	$SceneTransitionPlayer.set_speed_scale(speed_scale)
 	if direction_bool:
+		if rng.randi_range(1, 100) == 1:
+			$CanvasLayer/SceneTransitionScreen/Amogus.show()
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_WOOSH_IN)
 		$CanvasLayer/SceneTransitionScreen.show()
 		$SceneTransitionPlayer.play("scene_transition")
 	else:
-		$SceneTransitionPlayer.play_backwards("scene_transition")
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.MENU_WOOSH_OUT)
+		$SceneTransitionPlayer.play("scene_transition_2")
 		await $SceneTransitionPlayer.animation_finished
 		$CanvasLayer/SceneTransitionScreen.hide()
+		$CanvasLayer/SceneTransitionScreen/Amogus.hide()
+	

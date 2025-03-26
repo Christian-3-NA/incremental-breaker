@@ -36,6 +36,7 @@ func _physics_process(delta: float) -> void:
 		var collision_target = collision_info.get_collider()
 		match collision_target.get_name():
 			"PlayerPaddle":
+				AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.COIN_GRAB)
 				Global.coins += 1
 				collision_target.get_parent().get_node("ParticleManager").spawn_coin_grabbed_particle(position)
 				queue_free()

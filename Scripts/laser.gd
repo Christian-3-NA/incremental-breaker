@@ -31,6 +31,7 @@ func _physics_process(delta: float) -> void:
 
 func fire_laser(parent):
 	if energy > 0:
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.LASER_PEW)
 		energy -= 1
 		
 		# Raycast

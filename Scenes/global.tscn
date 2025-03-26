@@ -1,46 +1,65 @@
-[gd_scene load_steps=6 format=3 uid="uid://byf6toar5qc8h"]
+[gd_scene load_steps=9 format=3 uid="uid://byf6toar5qc8h"]
 
 [ext_resource type="Script" uid="uid://qt6wfqthh4x3" path="res://Scripts/global.gd" id="1_ohcpx"]
+[ext_resource type="Texture2D" uid="uid://j751kf3cuuik" path="res://Assets/screen_transition_panel_sideways.png" id="2_o8ivi"]
+[ext_resource type="VideoStream" path="res://Assets/amogus.ogv" id="3_yl8w0"]
 
 [sub_resource type="Animation" id="Animation_o8ivi"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:modulate")
+tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Vector2(0, -360)]
 }
 
 [sub_resource type="Animation" id="Animation_koean"]
 resource_name = "scene_transition"
-length = 0.25
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:modulate")
+tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(0.466517, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Vector2(-704, 0), Vector2(-32, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yl8w0"]
+resource_name = "scene_transition_2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/SceneTransitionScreen:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Vector2(-32, 0), Vector2(640, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yl8w0"]
 _data = {
 &"RESET": SubResource("Animation_o8ivi"),
-&"scene_transition": SubResource("Animation_koean")
+&"scene_transition": SubResource("Animation_koean"),
+&"scene_transition_2": SubResource("Animation_yl8w0")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koean"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yl8w0"]
+texture = ExtResource("2_o8ivi")
 
 [node name="Global" type="Node"]
 process_mode = 3
@@ -61,10 +80,26 @@ playback_auto_capture_transition_type = 4
 layer = 2
 
 [node name="SceneTransitionScreen" type="Panel" parent="CanvasLayer"]
-visible = false
 z_index = 64
 z_as_relative = false
-offset_right = 640.0
-offset_bottom = 360.0
+offset_top = -360.0
+offset_right = 704.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_koean")
+theme_override_styles/panel = SubResource("StyleBoxTexture_yl8w0")
+
+[node name="Amogus" type="VideoStreamPlayer" parent="CanvasLayer/SceneTransitionScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+stream = ExtResource("3_yl8w0")
+autoplay = true
+loop = true

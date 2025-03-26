@@ -1,0 +1,18 @@
+[gd_scene load_steps=12 format=3 uid="uid://bldf7ecfww0l0"]
+
+[ext_resource type="Script" uid="uid://dukjy2m0whhja" path="res://Scripts/audio_manager.gd" id="1_sm2tf"]
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="2_hhwve"]
+[ext_resource type="Resource" uid="uid://tal2owx1hmkl" path="res://Resources/SoundEffects/BallBlockBounce.tres" id="3_qixve"]
+[ext_resource type="Resource" uid="uid://c57f3najw03qk" path="res://Resources/SoundEffects/MenuPositive.tres" id="4_qixve"]
+[ext_resource type="Resource" uid="uid://b70la7hlkrjib" path="res://Resources/SoundEffects/MenuNeutral.tres" id="5_0hehx"]
+[ext_resource type="Resource" uid="uid://do4o617xkiefk" path="res://Resources/SoundEffects/MenuNegative.tres" id="6_mjqhu"]
+[ext_resource type="Resource" uid="uid://47qnrwgdogcx" path="res://Resources/SoundEffects/CoinGrab.tres" id="7_tnn7g"]
+[ext_resource type="Resource" uid="uid://ctdkbkdxpto0d" path="res://Resources/SoundEffects/CoinSpawn.tres" id="8_lwpe1"]
+[ext_resource type="Resource" uid="uid://k7qfdimb5moc" path="res://Resources/SoundEffects/LaserPew.tres" id="9_lwpe1"]
+[ext_resource type="Resource" uid="uid://cs5syh6adu4e0" path="res://Resources/SoundEffects/MenuWooshIn.tres" id="10_5nrbi"]
+[ext_resource type="Resource" uid="uid://cpptjl8jqg6p6" path="res://Resources/SoundEffects/MenuWooshOut.tres" id="11_pn88s"]
+
+[node name="AudioManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_sm2tf")
+sound_effects = Array[ExtResource("2_hhwve")]([ExtResource("3_qixve"), ExtResource("4_qixve"), ExtResource("5_0hehx"), ExtResource("6_mjqhu"), ExtResource("7_tnn7g"), ExtResource("8_lwpe1"), ExtResource("9_lwpe1"), ExtResource("10_5nrbi"), ExtResource("11_pn88s")])
