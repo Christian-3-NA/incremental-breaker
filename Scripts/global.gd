@@ -1,7 +1,7 @@
 extends Node
 
 
-var coins = 10
+var coins = 1000
 var stars = 0
 
 # Upgrades. All values must be float
@@ -37,12 +37,12 @@ var upgrades_bought = []
 var pattern_dict = {}
 
 var image_pattern_ref_list = [
-	load("res://Assets/block_patterns/pattern1.png"),
-	load("res://Assets/block_patterns/pattern2.png"),
-	load("res://Assets/block_patterns/pattern3.png"),
-	load("res://Assets/block_patterns/pattern4.png"),
-	load("res://Assets/block_patterns/pattern5.png"),
-	load("res://Assets/block_patterns/pattern6.png"),
+#	load("res://Assets/block_patterns/pattern1.png"),
+#	load("res://Assets/block_patterns/pattern2.png"),
+#	load("res://Assets/block_patterns/pattern3.png"),
+#	load("res://Assets/block_patterns/pattern4.png"),
+#	load("res://Assets/block_patterns/pattern5.png"),
+#	load("res://Assets/block_patterns/pattern6.png"),
 	load("res://Assets/block_patterns/pattern7.png")
 ]
 

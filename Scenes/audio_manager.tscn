@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bldf7ecfww0l0"]
+[gd_scene load_steps=16 format=3 uid="uid://bldf7ecfww0l0"]
 
 [ext_resource type="Script" uid="uid://dukjy2m0whhja" path="res://Scripts/audio_manager.gd" id="1_sm2tf"]
 [ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="2_hhwve"]
@@ -11,8 +11,12 @@
 [ext_resource type="Resource" uid="uid://k7qfdimb5moc" path="res://Resources/SoundEffects/LaserPew.tres" id="9_lwpe1"]
 [ext_resource type="Resource" uid="uid://cs5syh6adu4e0" path="res://Resources/SoundEffects/MenuWooshIn.tres" id="10_5nrbi"]
 [ext_resource type="Resource" uid="uid://cpptjl8jqg6p6" path="res://Resources/SoundEffects/MenuWooshOut.tres" id="11_pn88s"]
+[ext_resource type="Resource" uid="uid://cfa4eixevgd78" path="res://Resources/SoundEffects/CrumblingBlockShake.tres" id="12_1bal0"]
+[ext_resource type="Resource" uid="uid://b7pb8gfaj7yd1" path="res://Resources/SoundEffects/CrumblingBlockFall.tres" id="13_vhwx7"]
+[ext_resource type="Resource" uid="uid://ltdmwc1aq1e8" path="res://Resources/SoundEffects/CrumblingBlockCrash.tres" id="14_bkjj7"]
+[ext_resource type="Resource" uid="uid://bpi6624hv1p83" path="res://Resources/SoundEffects/CrumblingBlockHit.tres" id="15_vhwx7"]
 
 [node name="AudioManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_sm2tf")
-sound_effects = Array[ExtResource("2_hhwve")]([ExtResource("3_qixve"), ExtResource("4_qixve"), ExtResource("5_0hehx"), ExtResource("6_mjqhu"), ExtResource("7_tnn7g"), ExtResource("8_lwpe1"), ExtResource("9_lwpe1"), ExtResource("10_5nrbi"), ExtResource("11_pn88s")])
+sound_effects = Array[ExtResource("2_hhwve")]([ExtResource("3_qixve"), ExtResource("4_qixve"), ExtResource("5_0hehx"), ExtResource("6_mjqhu"), ExtResource("7_tnn7g"), ExtResource("8_lwpe1"), ExtResource("9_lwpe1"), ExtResource("10_5nrbi"), ExtResource("11_pn88s"), ExtResource("12_1bal0"), ExtResource("13_vhwx7"), ExtResource("14_bkjj7"), ExtResource("15_vhwx7")])

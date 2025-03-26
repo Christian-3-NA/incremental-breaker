@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://qt6wfqthh4x3" path="res://Scripts/global.gd" id="1_ohcpx"]
 [ext_resource type="Texture2D" uid="uid://j751kf3cuuik" path="res://Assets/screen_transition_panel_sideways.png" id="2_o8ivi"]
-[ext_resource type="VideoStream" path="res://Assets/amogus.ogv" id="3_yl8w0"]
+[ext_resource type="VideoStream" uid="uid://b0xs17etpd7x5" path="res://Assets/amogus.ogv" id="3_yl8w0"]
 
 [sub_resource type="Animation" id="Animation_o8ivi"]
 length = 0.001

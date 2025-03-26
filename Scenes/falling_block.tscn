@@ -1,10 +1,72 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm051pkgv28hh"]
+[gd_scene load_steps=8 format=3 uid="uid://cm051pkgv28hh"]
 
 [ext_resource type="Script" uid="uid://dwsrkxxnrk5qk" path="res://Scripts/falling_block.gd" id="1_374re"]
 [ext_resource type="Texture2D" uid="uid://csxmyymx5rp1x" path="res://Assets/crumbling_block.png" id="2_vo5tb"]
+[ext_resource type="Texture2D" uid="uid://c27u4ejtovv2h" path="res://Assets/cracks.png" id="3_vo5tb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k7ffj"]
 size = Vector2(30, 30)
+
+[sub_resource type="Animation" id="Animation_vo5tb"]
+resource_name = "shaking_block"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FallingBlockSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrackSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k7ffj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FallingBlockSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrackSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7ffj"]
+_data = {
+&"RESET": SubResource("Animation_k7ffj"),
+&"shaking_block": SubResource("Animation_vo5tb")
+}
 
 [node name="FallingBlock" type="CharacterBody2D"]
 collision_layer = 4
@@ -14,5 +76,13 @@ script = ExtResource("1_374re")
 [node name="FallingBlockSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_vo5tb")
 
+[node name="CrackSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_vo5tb")
+
 [node name="FallingBlockCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_k7ffj")
+
+[node name="ShakeAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_k7ffj")
+}

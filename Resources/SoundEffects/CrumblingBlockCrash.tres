@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://ltdmwc1aq1e8"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_cpuxt"]
+[ext_resource type="AudioStream" uid="uid://61i8hd1rsluf" path="res://Assets/sounds/crumbling_block_crash.wav" id="2_6nsny"]
+
+[resource]
+script = ExtResource("1_cpuxt")
+limit = 5
+type = 11
+sound_effect = ExtResource("2_6nsny")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"
