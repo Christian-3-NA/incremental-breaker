@@ -66,6 +66,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Makes you fall when you run out of time lol
 	if Global.get_node("GameTimer").time_left == 0:
+		if velocity.y == 0:
+			AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_FALL)
 		velocity.x = 0
 		velocity.y += 0.03
 		

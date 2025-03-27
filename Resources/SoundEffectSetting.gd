@@ -16,17 +16,16 @@ enum SOUND_EFFECT_TYPE {
 	CRUMBLING_BLOCK_SHAKE,
 	CRUMBLING_BLOCK_FALL,
 	CRUMBLING_BLOCK_CRASH,
-	CRUMBLING_BLOCK_HIT
+	CRUMBLING_BLOCK_HIT,
+	GHOST_BLOCK_APPEAR,
+	BALL_WALL_BOUNCE,
+	BALL_PADDLE_BOUNCE,
+	BALL_BALL_BOUNCE,
+	BALL_EXPLOSION,
+	BALL_SPEED_UP,
+	BALL_FALL,
+	PADDLE_FALL
 }
-
-'''
-	,
-	,
-	,
-	,
-	,
-	MENU_WOOSH
-'''
 
 @export_range(0, 10) var limit: int = 5 ## Maximum number of this SoundEffect to play simultaneously before culled.
 @export var type: SOUND_EFFECT_TYPE ## The unique sound effect in the [enum SOUND_EFFECT_TYPE] to associate with this effect. Each SoundEffect resource should have it's own unique [enum SOUND_EFFECT_TYPE] setting.

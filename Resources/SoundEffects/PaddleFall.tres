@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://chhasdwo4k5ky"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_ueiqq"]
+[ext_resource type="AudioStream" uid="uid://bxrgj66h2h76q" path="res://Assets/sounds/paddle_fall.wav" id="2_uvako"]
+
+[resource]
+script = ExtResource("1_ueiqq")
+limit = 5
+type = 20
+sound_effect = ExtResource("2_uvako")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

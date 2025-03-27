@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://ixfifnny10ko"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_8nn3f"]
+[ext_resource type="AudioStream" uid="uid://d2jhpwrnttvyh" path="res://Assets/sounds/ball_speed_up.wav" id="2_h7vb6"]
+
+[resource]
+script = ExtResource("1_8nn3f")
+limit = 5
+type = 18
+sound_effect = ExtResource("2_h7vb6")
+volume = -5.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

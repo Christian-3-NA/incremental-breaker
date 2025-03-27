@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://blksrxpnmewkl"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_6dr7f"]
+[ext_resource type="AudioStream" uid="uid://b2u47thh0xwp2" path="res://Assets/sounds/ball_fall.wav" id="2_fo2ce"]
+
+[resource]
+script = ExtResource("1_6dr7f")
+limit = 5
+type = 19
+sound_effect = ExtResource("2_fo2ce")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

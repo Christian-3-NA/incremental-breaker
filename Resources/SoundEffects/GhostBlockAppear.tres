@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://4va1xf8g5bc7"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_wmgh7"]
+[ext_resource type="AudioStream" uid="uid://djsb1wal7oxvs" path="res://Assets/sounds/ghost_block_appear.wav" id="2_u2wt7"]
+
+[resource]
+script = ExtResource("1_wmgh7")
+limit = 5
+type = 13
+sound_effect = ExtResource("2_u2wt7")
+volume = -5.0
+pitch_scale = 1.0
+pitch_randomness = 0.2
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

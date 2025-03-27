@@ -79,7 +79,7 @@ func _ready() -> void:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
 	# Change net strength display
-	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, (current_nets-1)/10)
+	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, min(1.0, (current_nets-1)/10))
 	
 	# Configure Height Bar
 	$RightPanel/HeightBar.max_value = Global.goal_height
@@ -126,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		$SafetyNet.process_mode = Node.PROCESS_MODE_INHERIT
 		$SafetyNet.enable_net()
 	# Change net strength display
-	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, (current_nets-1)/10)
+	$"SafetyNet/NetPowerSprite".modulate = Color(1.0, 1.0, 1.0, min(1.0, (current_nets-1)/10))
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
@@ -312,4 +312,4 @@ func on_ball_destroyed(ball, source):
 
 func _on_slowing_field_body_entered(body: Node2D) -> void:
 	if body in ball_ref:
-		body.going_slow = true
+		body.slow_down()

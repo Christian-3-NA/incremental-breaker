@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cnrmv4s43r2qu"]
 
-[ext_resource type="Script" uid="uid://b5atpkh22woud" path="res://Scenes/settings_menu.gd" id="1_8ef0u"]
+[ext_resource type="Script" uid="uid://b5atpkh22woud" path="res://Scripts/settings_menu.gd" id="1_8ef0u"]
 [ext_resource type="Texture2D" uid="uid://bvcbmge4ch4y4" path="res://webcam-toy-photo1.jpg" id="1_icv2g"]
 
 [node name="SettingsMenu" type="Control"]

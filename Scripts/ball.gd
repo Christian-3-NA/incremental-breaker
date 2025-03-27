@@ -13,6 +13,7 @@ var going_fast = false
 var going_slow = false
 var combo = 0
 var stored_explosions = 0
+var speed_up_time = 200
 
 # State Manager
 @onready var state = BallState.IDLE
@@ -47,7 +48,8 @@ func _physics_process(delta: float) -> void:
 		BallState.BOUNCING:
 			# Speeds the ball up if it hasn't been hit by the paddle in a long time
 			time_since_hit += 1
-			if time_since_hit % 200 == 0 and not time_since_hit == 200:
+			if time_since_hit % speed_up_time == 0 and not time_since_hit == speed_up_time:
+				AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_SPEED_UP, min(0.0, float(time_since_hit/speed_up_time)/10 - 0.6))
 				velocity *= 1.3
 				going_fast = true
 				if Global.do_speed_explosion:
@@ -97,20 +99,25 @@ func _physics_process(delta: float) -> void:
 							collision_target.get_parent().modify_time(combo/3, 1)
 						combo = 0
 						
-						AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BLOCK_BOUNCE)
+						AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_PADDLE_BOUNCE)
 						
 					"KillFloor":
 						shatter("bottom")
 						
 					_:
 						if collision_target.has_method("shatter"):
+							AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BALL_BOUNCE)
 							collision_target.velocity = (collision_target.velocity.normalized() + (collision_target.global_position - global_position).normalized()).normalized() * collision_target.speed
 							velocity = (velocity.normalized() + (global_position - collision_target.global_position).normalized()).normalized() * speed
+							for i in range(1, floor(time_since_hit/speed_up_time)):
+								velocity *= 1.3
 						
 						elif collision_info.get_normal().dot(velocity.normalized()) <= 0.0:
 							velocity = velocity.bounce(collision_info.get_normal())
 						
 						if collision_target.has_method("hit"):
+							# Sound here for blocks and barrier
+							AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BLOCK_BOUNCE)
 							collision_target.hit("ball")
 							
 						if collision_target.is_in_group("blocks"):
@@ -121,12 +128,19 @@ func _physics_process(delta: float) -> void:
 							if combo % 5 == 0:
 								combo_popup(combo)
 						
-						AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_BLOCK_BOUNCE)
+						if collision_target.get_name() == "Walls":
+							AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_WALL_BOUNCE)
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
 func shatter(source):
+	match source:
+		"bottom":
+			AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_FALL)
+		"laser":
+			AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_EXPLOSION)
+			AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.CRUMBLING_BLOCK_CRASH)
 	ball_destroyed.emit(self, source)
 	queue_free()
 
@@ -143,8 +157,15 @@ func combo_popup(value):
 
 
 func spawn_explosion(size):
+	AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.BALL_EXPLOSION)
 	var new_explosion = explosion_scene.instantiate()
 	new_explosion.scale = Vector2(0, 0)
 	new_explosion.position = position
 	new_explosion.expand(size)
 	get_parent().add_child(new_explosion)
+
+
+func slow_down():
+	time_since_hit = 0
+	going_fast = false
+	going_slow = true

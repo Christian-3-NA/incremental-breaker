@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://cdlld1m8vjl1j"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_n4kwx"]
+[ext_resource type="AudioStream" uid="uid://cdxptudufngtr" path="res://Assets/sounds/ball_paddle_bounce.wav" id="2_e7pmc"]
+
+[resource]
+script = ExtResource("1_n4kwx")
+limit = 5
+type = 15
+sound_effect = ExtResource("2_e7pmc")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"

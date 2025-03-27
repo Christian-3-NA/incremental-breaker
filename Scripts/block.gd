@@ -59,5 +59,6 @@ func spawn_with_powerup(powerup_type):
 
 func _on_height_collider_body_exited(body: Node2D) -> void:
 	if get_node("BlockCollision").disabled == true and body.is_in_group("balls"):
+		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.GHOST_BLOCK_APPEAR)
 		get_node("BlockSprite").texture = brick_sprite
 		get_node("BlockCollision").set_deferred("disabled", false)

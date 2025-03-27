@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3 uid="uid://pl7d8mywlefw"]
+
+[ext_resource type="Script" uid="uid://cu5wrtdadvucl" path="res://Resources/SoundEffectSetting.gd" id="1_wop6y"]
+[ext_resource type="AudioStream" uid="uid://bk572rhvk2kll" path="res://Assets/sounds/ball_wall_bounce.wav" id="2_uy1dx"]
+
+[resource]
+script = ExtResource("1_wop6y")
+limit = 5
+type = 14
+sound_effect = ExtResource("2_uy1dx")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.05
+metadata/_custom_type_script = "uid://cu5wrtdadvucl"
