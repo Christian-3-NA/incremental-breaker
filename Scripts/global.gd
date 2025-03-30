@@ -43,7 +43,8 @@ var image_pattern_ref_list = [
 	load("res://Assets/block_patterns/pattern4.png"),
 	load("res://Assets/block_patterns/pattern5.png"),
 	load("res://Assets/block_patterns/pattern6.png"),
-	load("res://Assets/block_patterns/pattern7.png")
+	load("res://Assets/block_patterns/pattern7.png"),
+	load("res://Assets/block_patterns/pattern8.png")
 ]
 
 # Gameplay Variables
@@ -56,6 +57,8 @@ var C_BLACK = Color(0, 0, 0, 1)
 var C_GREY = Color8(127, 127, 127, 255)
 var C_CYAN = Color8(0, 127, 127, 255)
 var C_MAROON = Color8(127, 0, 0, 255)
+var C_PINK = Color8(200, 0, 200, 255)
+var C_DARK_PINK = Color8(127, 0, 127, 255)
 
 var rng = RandomNumberGenerator.new()
 
@@ -87,6 +90,10 @@ func initialize_pattern(image, index):
 					pattern_data.append([3, [x, y]]) # GHOST BLOCK
 				C_MAROON:
 					pattern_data.append([4, [x, y]]) # CRUMBLING BLOCK
+				C_PINK:
+					pattern_data.append([5, [x, y]]) # FUSE PRIMER BLOCK
+				C_DARK_PINK:
+					pattern_data.append([6, [x, y]]) # FUSE BLOCK
 				
 	pattern_dict[index] = pattern_data
 

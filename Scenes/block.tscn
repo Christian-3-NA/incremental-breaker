@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://coeev6wrmaw5n"]
+[gd_scene load_steps=9 format=3 uid="uid://coeev6wrmaw5n"]
 
 [ext_resource type="Script" uid="uid://bb0cndyv7isbw" path="res://Scripts/block.gd" id="1_bu72t"]
 [ext_resource type="Texture2D" uid="uid://ccnt86k7ssien" path="res://Assets/small_blocks.png" id="2_pqxvc"]
@@ -10,6 +10,43 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ifh0e"]
 size = Vector2(16, 16)
 
+[sub_resource type="Animation" id="Animation_i67tl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_c2iur"]
+resource_name = "explode_block"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(15, 15, 15, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s3j4o"]
+_data = {
+&"RESET": SubResource("Animation_i67tl"),
+&"explode_block": SubResource("Animation_c2iur")
+}
+
 [node name="Block" type="StaticBody2D" groups=["blocks"]]
 collision_layer = 5
 collision_mask = 5
@@ -18,7 +55,7 @@ metadata/_edit_group_ = true
 
 [node name="BlockSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_pqxvc")
-hframes = 3
+hframes = 5
 
 [node name="BlockCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hsp53")
@@ -32,5 +69,12 @@ debug_color = Color(0.935453, 0.167515, 0.483988, 0.42)
 [node name="CracksSprite" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("3_ihyi0")
+region_rect = Rect2(0, 8, 16, 8)
+region_filter_clip_enabled = true
+
+[node name="ExplosionAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_s3j4o")
+}
 
 [connection signal="body_exited" from="HeightCollider" to="." method="_on_height_collider_body_exited"]

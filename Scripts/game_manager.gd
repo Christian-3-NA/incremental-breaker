@@ -8,6 +8,7 @@ var paddle_scene = preload("res://Scenes/player_paddle.tscn")
 var big_brick_sprite = preload("res://Assets/big_blocks.png")
 var ghost_brick_sprite = preload("res://Assets/ghost_blocks.png")
 var crumbling_brick_sprite = preload("res://Assets/crumbling_block.png")
+var small_cracks_sprite = preload("res://Assets/small_cracks.png")
 var brick_scene = preload("res://Scenes/block.tscn")
 var all_bricks = []
 var ball_ref = []
@@ -187,6 +188,10 @@ func insert_pattern(pattern_id):
 				spawn_ghost_block(space[1][0], space[1][1] - pattern_height)
 			4:
 				spawn_crumbling_block(space[1][0], space[1][1] - pattern_height)
+			5:
+				spawn_fuse_primer_block(space[1][0], space[1][1] - pattern_height)
+			6:
+				spawn_fuse_block(space[1][0], space[1][1] - pattern_height)
 
 
 func pattern_check():
@@ -229,7 +234,7 @@ func spawn_block(c, r):
 	if next_powerup_spawn != "none":
 		new_brick.spawn_with_powerup(next_powerup_spawn)
 		
-	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 2)
 	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
 	add_child(new_brick)
 
@@ -245,7 +250,7 @@ func spawn_big_block(c, r):
 	new_brick.get_node("BlockSprite").scale *= 0.5
 	new_brick.get_node("CracksSprite").scale *= 0.5
 		
-	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 2)
 	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
 	add_child(new_brick)
 
@@ -258,7 +263,7 @@ func spawn_ghost_block(c, r):
 	new_brick.get_node("BlockSprite").texture = ghost_brick_sprite
 	new_brick.get_node("BlockCollision").set_deferred("disabled", true)
 	
-	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 3)
+	new_brick.get_node("BlockSprite").frame = rng.randi_range(0, 2)
 	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
 	add_child(new_brick)
 
@@ -278,7 +283,33 @@ func spawn_crumbling_block(c, r):
 	
 	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
 	add_child(new_brick)
+
+
+func spawn_fuse_primer_block(c, r):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
 	
+	new_brick.primer = true
+	
+	new_brick.get_node("BlockSprite").frame = 3
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
+
+
+func spawn_fuse_block(c, r):
+	var new_brick = brick_scene.instantiate()
+	all_bricks.append(new_brick)
+	new_brick.brick_destroyed.connect(on_brick_broken)
+	
+	new_brick.fuse = true
+	new_brick.health = 3
+	new_brick.get_node("CracksSprite").texture = small_cracks_sprite
+	new_brick.get_node("CracksSprite").region_enabled = true
+	
+	new_brick.get_node("BlockSprite").frame = 4
+	new_brick.position = Vector2(margin + (16 * c) + (8 * (new_brick.scale.x - 1)), margin + (16 * r) - (8 * (new_brick.scale.y - 1)))
+	add_child(new_brick)
 
 
 ''' ---------- SIGNAL FUNCTIONS ---------- '''
@@ -295,6 +326,8 @@ func on_brick_broken(brick, source):
 			$ParticleManager.spawn_block_broken_particle(brick.position, brick.get_node("BlockSprite").frame, brick.scale)
 		"falling_block_broken":
 			$ParticleManager.spawn_block_broken_particle(brick.position, 3, Vector2(2, 2))
+		"fuse":
+			$ParticleManager.spawn_block_broken_particle(brick.position, 3, brick.scale)
 	
 	all_bricks.erase(brick)
 

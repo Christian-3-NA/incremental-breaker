@@ -17,12 +17,18 @@ var rng = RandomNumberGenerator.new()
 var health = 1
 var child_powerup
 var crumbling = false
+var fuse = false
+var primer = false
+var exploding = false
 
 
 ''' ---------- CUSTOM FUNCTIONS ---------- '''
 
-func hit(source):
-	health -= 1
+func hit(source, damage = 1):
+	if exploding:
+		return
+	
+	health -= damage
 	
 	if health <= 0:
 		brick_destroyed.emit(self, source)
@@ -34,10 +40,21 @@ func hit(source):
 		
 		if child_powerup:
 			child_powerup.activate_powerup()
+		if primer or (fuse and source == "fuse"):
+			explode_self() # haha. this is bad.
+			return
+		
 		queue_free()
 	
 	else:
 		$CracksSprite.show()
+		
+		if health == 2 and fuse:
+			$CracksSprite.offset = Vector2(0.0, 4.0)
+			$CracksSprite.region_rect = Rect2(0.0, 8.0, 16.0, 8.0)
+		elif health == 1 and fuse:
+			$CracksSprite.offset = Vector2(0.0, 0.0)
+			$CracksSprite.region_enabled = false
 		
 		if crumbling:
 			brick_destroyed.emit(self, "crumbling")
@@ -62,3 +79,15 @@ func _on_height_collider_body_exited(body: Node2D) -> void:
 		AudioManager.create_audio(SoundEffect.SOUND_EFFECT_TYPE.GHOST_BLOCK_APPEAR)
 		get_node("BlockSprite").texture = brick_sprite
 		get_node("BlockCollision").set_deferred("disabled", false)
+
+
+func explode_self():
+	$ExplosionAnimator.play("explode_block")
+	await $ExplosionAnimator.animation_finished
+	
+	for block in $HeightCollider.get_overlapping_bodies():
+		if block.is_in_group("blocks"):
+			block.hit("fuse", 4)
+			block.exploding = true
+	
+	queue_free()

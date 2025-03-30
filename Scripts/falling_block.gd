@@ -26,6 +26,11 @@ func _physics_process(delta: float) -> void:
 		velocity.y += 300 * delta
 		
 		var collision_info = move_and_collide(velocity * delta)
+		if collision_info:
+			if collision_info.get_collider().is_in_group("blocks"):
+				if collision_info.get_collider().exploding:
+					add_collision_exception_with(collision_info.get_collider())
+					collision_info = move_and_collide(velocity * delta)
 		
 		if collision_info:
 			var collision_target = collision_info.get_collider()
